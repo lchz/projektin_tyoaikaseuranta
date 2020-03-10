@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<h2>Tasks</h2>
+
+<table>
+    {% for task in tasks %}
+    <tr>
+        <th>Name</th>
+        <td>{{ task.name }}</td>
+    </tr>
+
+    <tr>
+        <th>Date</th>
+        <td>{{ task.date }}</td>
+    </tr>
+
+    <tr>
+        <th>Content</th>
+        <td>{{ task.content }}</td>
+    </tr>
+
+    <tr>
+        <th>Estimated hours</th>
+        <td>{{ task.estimatedTime }} hours</td>
+    </tr>
+
+    <tr>
+        <th>Actual hours</th>
+        <td>{{ task.actualTime }} hours</td>
+        <td>
+            <form method="POST" action="{{url_for('tasks_set_actualTime', task_id=task.id)}} ">
+                <input type="number" name="set_actualTime" />
+                <input type="submit" value="set actual hours" />
+            </form>
+        </td>
+    </tr>
+
+    <tr>
+        <th>Status</th>
+        <td>{{ task.status }}</td>
+        <td>
+            <form method="POST" action="{{url_for('tasks_set_done', task_id=task.id)}} ">
+                <input type="submit" value="Done!" />
+            </form>
+        </td>
+    </tr>
+
+    {% endfor %}
+</table>
+
+{% endblock body %}

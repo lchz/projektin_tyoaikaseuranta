@@ -3,14 +3,21 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Demo</title>
+    <title>Työaikaseuranta</title>
 </head>
 
 <body>
+    <ul>
+        <li><a href="{{ url_for('projects_index') }} ">List all projects</a></li>
+        <li><a href="{{ url_for('projects_form') }} ">Create a project</a></li>
+        <li><a href="{{ url_for('tasks_index') }} ">List all tasks</a></li>
+        <li><a href="{{ url_for('tasks_form') }} ">Create a task</a></li>
+        
+    </ul>
     {% block body %}
-    <p>
+    <div>
         Content
-    </p>
+    </div>
     {% endblock %}
 </body>
 
