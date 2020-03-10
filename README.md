@@ -1,10 +1,10 @@
 # Projektin tyäaikaseuranta
 
-[heroku app](https://tsoha-py-tyoaikaseuranta.herokuapp.com/)
+[Heroku](https://tsoha-py-tyoaikaseuranta.herokuapp.com/)
 
 [Tietokantakaavio](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/documentation/tietokantakaavio.png)
 
-[User story]()
+[User story](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/documentation/User_stories.md)
 
 
 
