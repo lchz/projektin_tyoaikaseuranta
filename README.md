@@ -1,6 +1,6 @@
 # Projektin tyäaikaseuranta
 
-[Tietokantakaavio]()
+[Tietokantakaavio](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/documentation/tietokantakaavio.png)
 
 [heroku app](https://tsoha-py-tyoaikaseuranta.herokuapp.com/)
 
