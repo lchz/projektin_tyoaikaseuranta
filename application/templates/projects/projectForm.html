@@ -2,11 +2,51 @@
 
 {% block body %}
 
-<form method="POST" action="{{ url_for('projects_create')}} ">
-    Project name: <input type="text" name="name" />
-    Project description: <input type="text" name="description" />
+<h2>Create a project</h2>
 
-    <input type="submit" value="Create!" />
+<form method="POST" action="{{ url_for('projects_create')}} ">
+    <table>
+        <tr>
+            <td>
+                {{ form.name.label }}
+            </td>
+            <td>
+                <span>*</span>
+                {{ form.name }}
+            </td>
+            <td>
+                {% for error in form.name.errors %}
+
+                <li>{{ error }} </li>
+
+                {% endfor %}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                {{ form.description.label }}
+            </td>
+            <td>
+                <span>*</span>
+                {{ form.description }}
+            </td>
+            <td>
+                {% for error in form.description.errors %}
+
+                <li>{{ error }} </li>
+
+                {% endfor %}
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Create a project" />
+            </td>
+        </tr>
+
+    </table>
 </form>
 
 {% endblock body %}

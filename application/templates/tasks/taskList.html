@@ -11,11 +11,6 @@
     </tr>
 
     <tr>
-        <th>Date</th>
-        <td>{{ task.date }}</td>
-    </tr>
-
-    <tr>
         <th>Content</th>
         <td>{{ task.content }}</td>
     </tr>
@@ -36,13 +31,32 @@
         </td>
     </tr>
 
+    {% if task.status  %}
     <tr>
-        <th>Status</th>
+        <th>Date</th>
+        <td>{{ task.date }}</td>
+    </tr>
+    {% endif %}
+
+    <tr>
+        <th>Finished</th>
         <td>{{ task.status }}</td>
+
+        {% if not task.status %}
         <td>
             <form method="POST" action="{{url_for('tasks_set_done', task_id=task.id)}} ">
-                <input type="submit" value="Done!" />
+                <input type="submit" value="Set as finished!" />
             </form>
+        </td>
+        {% endif %}
+    </tr>
+
+    <tr>
+        <td>
+            ----------------
+        </td>
+        <td>
+            ----------------
         </td>
     </tr>
 
