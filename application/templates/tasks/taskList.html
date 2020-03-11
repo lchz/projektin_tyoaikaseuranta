@@ -25,12 +25,16 @@
     <tr>
         <th>Actual hours</th>
         <td>{{ task.actualTime }} hours</td>
+        
+        {% if task.actualTime == 0.0 %}
         <td>
             <form method="POST" action="{{ url_for('tasks_set_actualTime', task_id=task.id, project_id=project.id) }} ">
                 <input type="number" name="set_actualTime" step="0.1" />
                 <input type="submit" value="set actual hours" />
             </form>
         </td>
+        {% endif %}
+
     </tr>
 
     {% if task.status  %}
