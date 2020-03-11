@@ -14,6 +14,12 @@ As a user, I can list all tasks so that I can trace my working hours.
 SELECT * FROM task;
 ```
 
+As a user, I can check details of a project so that I can register for it.
+
+```sql
+SELECT <project> FROM project WHERE project.id=<id>;
+```
+
 #### 2. Tiedon lisääminen
 
 As a user, I can create a project so that others can register for it.
@@ -28,7 +34,7 @@ As a user, I can create a task to record my working hours.
 INSERT INTO task (date_created, date_modified, name, content, estimatedTime, date, status) VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, <String>, <String>, <Numeric>, <Date>, <Boolean>);
 ```
 
-As a user, I can register for a project.
+As a user, I can register for a project so that I can trace my working hours on the project.
 
 ```sql
 INSERT INTO registration_table (project_id, account_id) VALUES (<Integer>, <Integer>);
