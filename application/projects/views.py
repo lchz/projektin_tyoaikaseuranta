@@ -1,5 +1,5 @@
 from application import app, db
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, abort
 from flask_login import login_required, current_user
 from application.projects.models import Project
 from application.auth.models import User
@@ -48,10 +48,13 @@ def projects_create():
 @app.route('/projects/<project_id>/register', methods=['POST'])
 def project_registration(project_id):
 
-    project = Project.query.get(project_id)
+    try:
+        project = Project.query.get(project_id)
 
-    project.participants.append(current_user)
+        project.participants.append(current_user)
 
-    db.session().commit()
-
-    return redirect(url_for('projects_index'))
+        db.session().commit()
+        return redirect(url_for('projects_index'))
+        
+    except:
+        abort(400)
