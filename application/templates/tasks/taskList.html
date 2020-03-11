@@ -1,7 +1,9 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<h2>Tasks</h2>
+<h2>Tasks in project <i>{{ project.name }} </i></h2>
+
+<a href="{{ url_for('tasks_form', project_id=project.id) }} ">Add a new task</a>
 
 <table>
     {% for task in tasks %}
@@ -24,8 +26,8 @@
         <th>Actual hours</th>
         <td>{{ task.actualTime }} hours</td>
         <td>
-            <form method="POST" action="{{url_for('tasks_set_actualTime', task_id=task.id)}} ">
-                <input type="number" name="set_actualTime" />
+            <form method="POST" action="{{ url_for('tasks_set_actualTime', task_id=task.id, project_id=project.id) }} ">
+                <input type="number" name="set_actualTime" step="0.1" />
                 <input type="submit" value="set actual hours" />
             </form>
         </td>
@@ -44,7 +46,7 @@
 
         {% if not task.status %}
         <td>
-            <form method="POST" action="{{url_for('tasks_set_done', task_id=task.id)}} ">
+            <form method="POST" action="{{url_for('tasks_set_done', task_id=task.id, project_id=project.id) }} ">
                 <input type="submit" value="Set as finished!" />
             </form>
         </td>

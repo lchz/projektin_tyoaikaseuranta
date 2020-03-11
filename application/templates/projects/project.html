@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<h2>{{ project.name }} </h2>
+<i>Created by {{ creator.name }} </i>
+
+<div>
+    <a href="{{ url_for('tasks_index', project_id=project.id) }} ">Tasks</a>
+</div>
+
+<h3>Description</h3>
+<div>
+    {{ project.description }}
+</div>
+
+{% endblock body %}

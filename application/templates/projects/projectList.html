@@ -6,15 +6,14 @@
 <table>
     <tr>
         <th>Name</th>
-        <th>Description</th>
     </tr>
 
     {% for p in projects %}
     <tr>
-        <td>{{ p.name }}: </td>
-        <td>{{ p.description }} </td>
+        <td><a href="{{ url_for('project_index', project_id=p.id) }}">{{ p.name }}</a></td>
     </tr>
     {% endfor %}
+    
 </table>
 
 {% endblock body %}
