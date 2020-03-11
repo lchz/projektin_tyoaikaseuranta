@@ -50,6 +50,9 @@ def tasks_create(project_id):
     task.account_id = current_user.id
     task.project_id = project_id
 
+    project = Project.query.get(project_id)
+    project.tasks.append(task)
+
     db.session().add(task)
     db.session().commit()
 

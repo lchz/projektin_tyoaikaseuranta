@@ -5,10 +5,6 @@ from application.projects.models import Project
 from application.auth.models import User
 from application.projects.forms import ProjectForm
 
-# <li><a href="{{ url_for('tasks_index') }} ">List all tasks</a></li>
-#         <li><a href="{{ url_for('tasks_form') }} ">Create a task</a></li>
-
-
 
 @app.route('/projects/<project_id>', methods=['GET'])
 def project_index(project_id):
@@ -44,6 +40,18 @@ def projects_create():
     project.account_id = current_user.id
 
     db.session().add(project)
+    db.session().commit()
+
+    return redirect(url_for('projects_index'))
+
+
+@app.route('/projects/<project_id>/register', methods=['POST'])
+def project_registration(project_id):
+
+    project = Project.query.get(project_id)
+
+    project.participants.append(current_user)
+
     db.session().commit()
 
     return redirect(url_for('projects_index'))

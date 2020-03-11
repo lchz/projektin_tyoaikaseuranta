@@ -12,8 +12,6 @@
         Logged in as {{ current_user.name }}
         <a href="{{ url_for('auth_logout') }}">Logout</a>
     </p>
-    {% else %}
-    <a href="{{ url_for('auth_login') }}">Login</a>
     {% endif %}
 
     <ul>

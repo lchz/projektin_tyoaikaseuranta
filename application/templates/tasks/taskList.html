@@ -18,14 +18,14 @@
     </tr>
 
     <tr>
-        <th>Estimated hours</th>
+        <th>Estimated time</th>
         <td>{{ task.estimatedTime }} hours</td>
     </tr>
 
     <tr>
-        <th>Actual hours</th>
+        <th>Actual time</th>
         <td>{{ task.actualTime }} hours</td>
-        
+
         {% if task.actualTime == 0.0 %}
         <td>
             <form method="POST" action="{{ url_for('tasks_set_actualTime', task_id=task.id, project_id=project.id) }} ">

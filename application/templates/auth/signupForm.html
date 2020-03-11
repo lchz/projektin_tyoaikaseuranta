@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<h2>Sign up</h2>
+
+<form method="POST" action="{{ url_for('auth_signup') }} ">
+    <table>
+        <tr>
+            <td>{{ form.name.label }} </td>
+            <td>
+                <span>*</span>
+                {{ form.name }}
+            </td>
+            <td>
+                {% for error in form.name.errors %}
+
+                <li>{{ error }} </li>
+
+                {% endfor %}
+            </td>
+        </tr>
+
+        <tr>
+            <td>{{ form.username.label }} </td>
+            <td>
+                <span>*</span>
+                {{ form.username }}
+            </td>
+            <td>
+                {% if error %}
+                {{ error }}
+                {% endif %}
+
+                {% for error in form.username.errors %}
+                <li>{{ error }} </li>
+                {% endfor %}
+            </td>
+        </tr>
+
+        <tr>
+            <td>{{ form.password.label }} </td>
+            <td>
+                <span>*</span>
+                {{ form.password }}
+            </td>
+            <td>
+                {% for error in form.password.errors %}
+
+                <li>{{ error }} </li>
+
+                {% endfor %}
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Sign up" />
+            </td>
+        </tr>
+
+    </table>
+</form>
+
+{% endblock body %}

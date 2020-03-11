@@ -14,4 +14,10 @@
     {{ project.description }}
 </div>
 
+<div>
+    <form method="POST" action="{{ url_for('project_registration', project_id=project.id) }}">
+        <input type="submit" value="Register" />
+    </form>
+</div>
+
 {% endblock body %}

@@ -7,7 +7,7 @@ class TaskForm(FlaskForm):
         'Name:', [validators.length(min=5), validators.required()])
     content = TextAreaField('Content:', [validators.length(min=5)])
     estimatedTime = DecimalField(
-        'Estimated time:', [validators.required(), validators.NumberRange(min=0.1)])
+        'Estimated time:', [validators.required(), validators.NumberRange(min=0.0)])
     status = BooleanField('Finished:')
 
     class Meta:

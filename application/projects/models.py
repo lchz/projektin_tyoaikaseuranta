@@ -7,6 +7,7 @@ class Project(db.Model):
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
                               onupdate=db.func.current_timestamp())
 
+
     name = db.Column(db.String(144), nullable=False)
     description = db.Column(db.String(1000), nullable=False)
 
@@ -14,9 +15,8 @@ class Project(db.Model):
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
 
     tasks = db.relationship('Task', backref='project', lazy=True)
-    users = db.relationship('User', backref='account', lazy=True)
-
-
+    
+    # participants
 
     def __init__(self, name, description):
         self.name = name
