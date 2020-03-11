@@ -5,6 +5,10 @@
 
 <a href="{{ url_for('tasks_form', project_id=project.id) }} ">Add a new task</a>
 
+<div>
+    {{ error }}
+</div>
+
 <table>
     {% for task in tasks %}
     <tr>
@@ -55,6 +59,15 @@
             </form>
         </td>
         {% endif %}
+    </tr>
+
+    <tr>
+        <td></td>
+        <td>
+            <form method="POST" action="{{ url_for('task_deletion', task_id=task.id, project_id=project.id) }} ">
+                <input type="submit" value="Remove task" />
+            </form>
+        </td>
     </tr>
 
     <tr>

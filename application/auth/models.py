@@ -3,7 +3,6 @@ from application import db
 registration_table = db.Table('registration',
     db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True),
     db.Column('account_id', db.Integer, db.ForeignKey('account.id'), primary_key=True)
-    
 )
 
 class User(db.Model):

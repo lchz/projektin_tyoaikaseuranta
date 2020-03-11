@@ -1,5 +1,5 @@
 from application import app, db
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, abort
 from flask_login import login_required, current_user
 from application.tasks.models import Task
 from application.projects.models import Project
@@ -50,9 +50,6 @@ def tasks_create(project_id):
     task.account_id = current_user.id
     task.project_id = project_id
 
-    project = Project.query.get(project_id)
-    project.tasks.append(task)
-
     db.session().add(task)
     db.session().commit()
 
@@ -82,3 +79,20 @@ def tasks_set_actualTime(project_id, task_id):
     db.session().commit()
 
     return redirect(url_for('tasks_index', project_id=project_id))
+
+
+@app.route('/projects/<project_id>/tasks/<task_id>/deletion', methods=['POST'])
+def task_deletion(project_id, task_id):
+
+    try:    
+        task = Task.query.get(task_id)
+        
+        if not task.account_id == current_user.id:
+            abort(401)
+
+        db.session().delete(task)
+        db.session().commit()
+        return redirect(url_for('tasks_index', project_id=project_id))
+
+    except:
+        abort(400)
