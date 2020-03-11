@@ -7,7 +7,6 @@
 [User story](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/documentation/User_stories.md)
 
 
-
 ## Kuvaus
 
 Projektin aiheena on projektin työaikaseuranta järjestelmä, jossa voi seurata projektiin käytettyä työaikaa.
@@ -16,5 +15,10 @@ Perusideana on, että käyttäjä voi kirjautuneena rekisteröidä itsensä olem
 
 Projektipäälikkönä voi luoda uusia projekteja ja tarkistaa projektiin käytettyä aikaa kokonaisuudessan sekä kukin osallistujan yhteenvetoraportteja. Projektipäälikkö voi myös muokata kukin projektin osallistujia, eli lisätä projektiin uuden osallistujan tai jostain syystä poistaa osallistujan projektista.
 
+## Tunnukset
 
+| Käyttäjätunnus | Salasana  |
+|:--------------:|:---------:|
+|    test        | secret    |
+|    test2       | secret2   |
 
