@@ -110,3 +110,13 @@ def task_deletion(project_id, task_id):
 
     except:
         abort(400)
+
+
+@app.route('/projects/<project_id>/myTasks', methods=['GET'])
+@login_required
+def myTasks(project_id):
+
+    project = Project.query.get(project_id)
+    tasks = Task.find_my_tasks(current_user.id, project_id)
+
+    return render_template('tasks/myTasks.html', project=project, tasks=tasks)
