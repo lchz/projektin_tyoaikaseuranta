@@ -7,22 +7,26 @@
 </head>
 
 <body>
-    {% if current_user.is_authenticated %}
-    <p>
-        Logged in as {{ current_user.name }}
-        <a href="{{ url_for('auth_logout') }}">Logout</a>
-    </p>
+    <div>
+        {% if current_user.is_authenticated %}
+        <p>
+            Logged in as {{ current_user.name }}
+            <a href="{{ url_for('auth_logout') }}">Logout</a>
+        </p>
 
-    {% else %}
-    <a href="{{ url_for('auth_login') }}">Login</a>
-    <a href="{{ url_for('auth_signup') }}">Sign up</a>
-    {% endif %}
+        {% else %}
+        <a href="{{ url_for('auth_login') }}">Login</a>
+        <a href="{{ url_for('auth_signup') }}">Sign up</a>
+        {% endif %}
+    </div>
 
-    <ul>
-        <li><a href="{{ url_for('projects_index') }} ">List all projects</a></li>
-        <li><a href="{{ url_for('projects_form') }} ">Create a project</a></li>
-
-    </ul>
+    <div>
+        <ul>
+            <li><a href="{{ url_for('projects_index') }} ">List all projects</a></li>
+            <li><a href="{{ url_for('projects_form') }} ">Create a project</a></li>
+            <li><a href="{{ url_for('myPage') }} ">My page</a></li>
+        </ul>
+    </div>
 
     {% block body %}
     <div>

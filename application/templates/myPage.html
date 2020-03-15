@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div>
+    <h2>My registerations</h2>
+
+    {% for project in projects %}
+    <div>
+        <a href="{{url_for( 'project_index', project_id=project.id )}}">{{ project.name }} </a>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock body %}
