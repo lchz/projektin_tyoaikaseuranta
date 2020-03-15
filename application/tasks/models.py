@@ -13,10 +13,8 @@ class Task(Base):
     date = db.Column(db.Date, nullable=False)
     status = db.Column(db.Boolean, nullable=False)
 
-    account_id = db.Column(db.Integer, db.ForeignKey(
-        'account.id'), nullable=False)
-    project_id = db.Column(db.Integer, db.ForeignKey(
-        'project.id'), nullable=False)
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
 
     def __init__(self, name, content, estimatedTime, date, status):
         self.name = name
@@ -44,4 +42,3 @@ class Task(Base):
             tasks.append({ 'name': row[0], 'status': row[1] })
 
         return tasks
-# 'date': row[1][:10],

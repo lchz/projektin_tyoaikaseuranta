@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<h2>Tasks in project <i>{{ project.name }} </i></h2>
+<h2>Tasks in <i>{{ project.name }} </i></h2>
 
 <a href="{{ url_for('tasks_form', project_id=project.id) }} ">Add a new task</a>
 <a href=" {{ url_for('myTasks', project_id=project.id) }} ">My tasks</a>
@@ -10,77 +10,10 @@
     {{ error }}
 </div>
 
-<table>
+<div>
     {% for task in tasks %}
-    <tr>
-        <th>Name</th>
-        <td>{{ task.name }}</td>
-    </tr>
-
-    <tr>
-        <th>Content</th>
-        <td>{{ task.content }}</td>
-    </tr>
-
-    <tr>
-        <th>Estimated time</th>
-        <td>{{ task.estimatedTime }} hours</td>
-    </tr>
-
-    <tr>
-        <th>Actual time</th>
-        <td>{{ task.actualTime }} hours</td>
-
-        {% if task.actualTime == 0.0 %}
-        <td>
-            <form method="POST" action="{{ url_for('tasks_set_actualTime', task_id=task.id, project_id=project.id) }} ">
-                <input type="number" name="set_actualTime" step="0.1" />
-                <input type="submit" value="set actual hours" />
-            </form>
-        </td>
-        {% endif %}
-
-    </tr>
-
-    {% if task.status  %}
-    <tr>
-        <th>Date</th>
-        <td>{{ task.date }}</td>
-    </tr>
-    {% endif %}
-
-    <tr>
-        <th>Finished</th>
-        <td>{{ task.status }}</td>
-
-        {% if not task.status %}
-        <td>
-            <form method="POST" action="{{url_for('tasks_set_done', task_id=task.id, project_id=project.id) }} ">
-                <input type="submit" value="Set as finished!" />
-            </form>
-        </td>
-        {% endif %}
-    </tr>
-
-    <tr>
-        <td></td>
-        <td>
-            <form method="POST" action="{{ url_for('task_deletion', task_id=task.id, project_id=project.id) }} ">
-                <input type="submit" value="Remove task" />
-            </form>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            ----------------
-        </td>
-        <td>
-            ----------------
-        </td>
-    </tr>
-
+        <p><a href=" {{ url_for('task_index', project_id=project.id, task_id=task.id) }} "> {{ task.name }} </a></p>
     {% endfor %}
-</table>
+</div>
 
 {% endblock body %}

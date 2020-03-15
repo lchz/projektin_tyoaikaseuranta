@@ -32,10 +32,23 @@ def tasks_index(project_id):
                            tasks=Task.query.filter_by(project_id=project_id),
                            project=project)
 
+
 @app.route('/projects/<project_id>/tasks/<task_id>', methods=['GET'])
 @login_required
-def task_index(task_id):
-    return render_template('tasks/task.html', task=Task.query.get(task_id))
+def task_index(project_id, task_id):
+
+    task = Task.query.get(task_id)
+    creator = User.query.get(task.account_id)
+    authorized = False
+
+    if creator.id == current_user.id:
+        authorized = True
+
+    return render_template('tasks/task.html',
+                            task=task,
+                            creator=creator.name,
+                            authorized=authorized,
+                            projectId=project_id)
 
 
 @app.route('/projects/<project_id>/tasks/new')
