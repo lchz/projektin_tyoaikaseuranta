@@ -10,10 +10,17 @@ from application.projects.forms import ProjectForm
 def project_index(project_id):
 
     project = Project.query.get(project_id)
+    canRegister = True
 
+    for participant in project.participants:
+        if participant.id == current_user.id:
+            canRegister = False
+            
     return render_template('/projects/project.html', 
                             project=project, 
-                            creator=User.query.get(project.account_id))
+                            creator=User.query.get(project.account_id),
+                            canRegister=canRegister
+                          )
 
 
 @app.route('/projects', methods=['GET'])

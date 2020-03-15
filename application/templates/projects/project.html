@@ -5,8 +5,15 @@
 <h2>{{ project.name }} </h2>
 <i>Created by {{ creator.name }} </i>
 
+
 <div>
     <a href="{{ url_for('tasks_index', project_id=project.id) }} ">Tasks</a>
+    
+    {% if error %}
+    <div>
+        {{ error }}
+    </div>
+    {% endif %}
 </div>
 
 <h3>Description</h3>
@@ -14,10 +21,13 @@
     {{ project.description }}
 </div>
 
+{% if canRegister %}
 <div>
     <form method="POST" action="{{ url_for('project_registration', project_id=project.id) }}">
         <input type="submit" value="Register" />
     </form>
 </div>
+{% endif %}
+
 
 {% endblock body %}

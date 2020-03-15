@@ -2,6 +2,7 @@ from application import app, db
 from flask import render_template, request, redirect, url_for, abort
 from flask_login import login_required, current_user
 from application.tasks.models import Task
+from application.auth.models import User
 from application.projects.models import Project
 from application.tasks.forms import TaskForm
 
@@ -13,6 +14,19 @@ import datetime
 def tasks_index(project_id):
 
     project = Project.query.get(project_id)
+    canSee = False
+
+    for participant in project.participants:
+        if participant.id == current_user.id:
+            canSee = True
+
+    if not canSee:
+        return render_template('projects/project.html', 
+                                project=project,
+                                creator=User.query.get(project.account_id),
+                                canRegister=True,
+                                error='Please register first.'
+                              )
 
     return render_template('tasks/taskList.html',
                            tasks=Task.query.filter_by(project_id=project_id),
