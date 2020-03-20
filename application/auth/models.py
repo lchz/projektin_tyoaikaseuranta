@@ -12,7 +12,8 @@ class User(Base):
     name = db.Column(db.String(144), nullable=False)
     username = db.Column(db.String(144), nullable=False, unique=True)
     password = db.Column(db.String(144), nullable=False)
-    roles = db.Column(db.ARRAY(30), nullable=False)
+
+    roles = db.Column(db.String(144), nullable=False)
 
     tasks = db.relationship('Task', backref='account', lazy=True)
     
@@ -20,6 +21,9 @@ class User(Base):
                                     secondary=registration_table, 
                                     backref=db.backref('participants', lazy=True), 
                                     lazy=True )
+
+    # Only MASTER can create projects
+    created_projects = db.relationship('Project', backref='account', lazy=True)
 
 
     def __init__(self, name, username, password):

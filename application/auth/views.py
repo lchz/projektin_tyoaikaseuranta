@@ -41,7 +41,7 @@ def auth_signup_basic():
         return render_template('auth/signupForm.html', form=form, role="BASIC")
 
     user = User(form.name.data, form.username.data, form.password.data)
-    user.roles.append("BASIC")
+    user.roles = "BASIC"
 
     try:
         db.session().add(user)
@@ -67,7 +67,7 @@ def auth_signup_master():
         return render_template('auth/signupForm.html', form=form, role="MASTER")
 
     user = User(form.name.data, form.username.data, form.password.data)
-    user.roles.append("MASTER")
+    user.roles = "MASTER"
 
     try:
         db.session().add(user)

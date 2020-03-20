@@ -1,12 +1,19 @@
-from application import app, db
+from application import app, db, login_required
 from flask import render_template, request, redirect, url_for, abort
-from flask_login import login_required, current_user
+from flask_login import current_user
 from application.projects.models import Project
 from application.auth.models import User
 from application.projects.forms import ProjectForm
 
 
+
+@app.route('/projects', methods=['GET'])
+def projects_index():
+    return render_template('/projects/projectList.html', projects=Project.query.all())
+
+
 @app.route('/projects/<project_id>', methods=['GET'])
+@login_required(role="ANY")
 def project_index(project_id):
 
     project = Project.query.get(project_id)
@@ -23,19 +30,14 @@ def project_index(project_id):
                           )
 
 
-@app.route('/projects', methods=['GET'])
-def projects_index():
-    return render_template('/projects/projectList.html', projects=Project.query.all())
-
-
 @app.route('/projects/new')
-@login_required
+@login_required(role="MASTER")
 def projects_form():
     return render_template('projects/projectForm.html', form=ProjectForm())
 
 
 @app.route('/projects', methods=['POST'])
-@login_required
+@login_required(role="MASTER")
 def projects_create():
 
     form = ProjectForm(request.form)
@@ -53,6 +55,7 @@ def projects_create():
 
 
 @app.route('/projects/<project_id>/register', methods=['POST'])
+@login_required(role="BASIC")
 def project_registration(project_id):
 
     try:
