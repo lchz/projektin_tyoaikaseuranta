@@ -1,52 +1,33 @@
 {% extends 'layout.html' %}
 
+
 {% block body %}
+<div class="row d-flex justify-content-center">
+    <div class="col-md-6">
 
-<h2>Create a project</h2>
+        {% for error in form.name.errors %}
+        <div>{{ error }} </div>
+        {% endfor %}
 
-<form method="POST" action="{{ url_for('projects_create')}} ">
-    <table>
-        <tr>
-            <td>
-                {{ form.name.label }}
-            </td>
-            <td>
-                <span>*</span>
-                {{ form.name }}
-            </td>
-            <td>
-                {% for error in form.name.errors %}
+        {% for error in form.description.errors %}
+        <div>{{ error }} </div>
+        {% endfor %}
 
-                <li>{{ error }} </li>
+        <form method="POST" action="{{ url_for('projects_create')}} ">
+            <h1 class="h3 mb-3 font-weight-normal">Create a project</h1>
+            <div>
+                {{form.name.label}} {{ form.name(class="form-control") }}
+            </div>
 
-                {% endfor %}
-            </td>
-        </tr>
+            <div>
+                {{form.description.label(style="margin-top: 20px;")}} {{ form.description(class="form-control") }}
+            </div>
 
-        <tr>
-            <td>
-                {{ form.description.label }}
-            </td>
-            <td>
-                <span>*</span>
-                {{ form.description }}
-            </td>
-            <td>
-                {% for error in form.description.errors %}
+            <button class="btn btn-lg btn-primary btn-block" style="margin-top: 20px;" type="submit">
+                Create project
+            </button>
+        </form>
 
-                <li>{{ error }} </li>
-
-                {% endfor %}
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="2">
-                <input type="submit" value="Create a project" />
-            </td>
-        </tr>
-
-    </table>
-</form>
-
+    </div>
+</div>
 {% endblock body %}
