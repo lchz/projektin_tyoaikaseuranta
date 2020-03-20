@@ -40,9 +40,9 @@ def tasks_index(project_id):
 @login_required(role="ANY")
 def task_index(project_id, task_id):
 
+    authorized = False
     task = Task.query.get(task_id)
     creator = User.query.get(task.account_id)
-    authorized = False
 
     if creator.id == current_user.id:
         authorized = True
@@ -70,12 +70,14 @@ def tasks_create(project_id):
 
     status = form.status.data
     date = datetime.date(1999, 9, 19)
+    actualTime = 0.0
 
     if status:
         date = datetime.datetime.now().date()
+        actualTime = form.estimatedTime.data
 
     task = Task(form.name.data, form.content.data,
-                form.estimatedTime.data, date, status)
+                form.estimatedTime.data, actualTime, date, status)
 
     task.account_id = current_user.id
     task.project_id = project_id

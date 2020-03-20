@@ -16,14 +16,13 @@ class Task(Base):
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
 
-    def __init__(self, name, content, estimatedTime, date, status):
+    def __init__(self, name, content, estimatedTime, actualTime, date, status):
         self.name = name
         self.content = content
         self.estimatedTime = estimatedTime
         self.date = date
         self.status = status
-
-        self.actualTime = 0
+        self.actualTime = actualTime
 
 
     @staticmethod
