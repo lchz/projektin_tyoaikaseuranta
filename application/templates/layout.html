@@ -38,10 +38,27 @@
 
                 <div class="form-inline mt-2 mt-md-0">
                     {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('auth_logout') }}">{{ current_user.name }} -- Logout</a>
+
+                    <div class="btn btn-info">
+                        <a href="{{ url_for('auth_logout') }}" role="button" aria-pressed="true">
+                            {{ current_user.name }} -- Logout
+                        </a>
+                    </div>
                     {% else %}
-                    <a href="{{ url_for('auth_login') }}" style="margin-right: 10px;">Sign in</a>
-                    <a href=" {{ url_for('auth_signup') }} ">Sign up</a>
+                    
+                    <div class="dropdown show" style="margin-right: 10px;">
+                        <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Sing up
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href=" {{ url_for('auth_signup_basic') }} ">basic account</a>
+                            <a class="dropdown-item" href=" {{ url_for('auth_signup_master') }} ">master account</a>
+                        </div>
+                    </div>
+
+                    <a href="{{ url_for('auth_login') }}" class="btn btn-info" role="button">
+                        Sign in
+                    </a>
                     {% endif %}
                 </div>
 

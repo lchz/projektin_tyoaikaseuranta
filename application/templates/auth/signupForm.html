@@ -16,9 +16,10 @@
         </div>
         {% endfor %}
 
-        
-        <form method="POST" action="{{ url_for('auth_signup') }} ">
-            <h1 class="h3 mb-3 font-weight-normal">Sign up a new account</h1>
+
+        {% if role == "BASIC" %}
+        <form method="POST" action="{{ url_for('auth_signup_basic') }} ">
+            <h1 class="h3 mb-3 font-weight-normal">Sign Up A New Account</h1>
             <div>
                 {{form.name.label}} {{ form.name(class="form-control") }}
             </div>
@@ -33,6 +34,25 @@
             </button>
                     
         </form>
+        
+        {% elif role == "MASTER" %}
+        <form method="POST" action="{{ url_for('auth_signup_master') }} ">
+            <h1 class="h3 mb-3 font-weight-normal">Sign Up As A Master</h1>
+            <div>
+                {{form.name.label}} {{ form.name(class="form-control") }}
+            </div>
+            <div>
+                {{ form.username.label(style="margin-top: 20px;") }} {{ form.username(class="form-control") }}
+            </div>
+            <div>
+                {{form.password.label(style="margin-top: 20px;")}} {{ form.password(type="password", class="form-control") }}
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" style="margin-top: 20px;" type="submit">
+                Create
+            </button>
+                    
+        </form>
+        {% endif %}
 
     </div>
 </div>

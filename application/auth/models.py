@@ -12,6 +12,7 @@ class User(Base):
     name = db.Column(db.String(144), nullable=False)
     username = db.Column(db.String(144), nullable=False, unique=True)
     password = db.Column(db.String(144), nullable=False)
+    roles = db.Column(db.ARRAY(30), nullable=False)
 
     tasks = db.relationship('Task', backref='account', lazy=True)
     
@@ -37,3 +38,6 @@ class User(Base):
 
     def is_authenticated(self):
         return True
+
+    def get_roles(self):
+        return self.roles

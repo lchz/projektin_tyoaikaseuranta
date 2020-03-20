@@ -30,23 +30,54 @@ def auth_login():
     return redirect(url_for('index'))
 
 
-@app.route('/auth/signup', methods=['GET', 'POST'])
-def auth_signup():
+@app.route('/auth/signup/basic', methods=['GET', 'POST'])
+def auth_signup_basic():
     if request.method == 'GET':
-        return render_template('auth/signupForm.html', form=SignupForm())
+        return render_template('auth/signupForm.html', form=SignupForm(), role="BASIC")
 
     form = SignupForm(request.form)
 
     if not form.validate():
-        return render_template('auth/signupForm.html', form=form)
+        return render_template('auth/signupForm.html', form=form, role="BASIC")
 
     user = User(form.name.data, form.username.data, form.password.data)
+    user.roles.append("BASIC")
 
     try:
         db.session().add(user)
         db.session().commit()
     except IntegrityError:
-        return render_template('auth/signupForm.html', form=form, error='Username is occupied.')
+        return render_template('auth/signupForm.html', 
+                                form=form, 
+                                error='Username is occupied.', 
+                                role="BASIC"
+                              )
+
+    return redirect(url_for('auth_login'))
+
+
+@app.route('/auth/signup/master', methods=['GET', 'POST'])
+def auth_signup_master():
+    if request.method == 'GET':
+        return render_template('auth/signupForm.html', form=SignupForm(), role="MASTER")
+
+    form = SignupForm(request.form)
+
+    if not form.validate():
+        return render_template('auth/signupForm.html', form=form, role="MASTER")
+
+    user = User(form.name.data, form.username.data, form.password.data)
+    user.roles.append("MASTER")
+
+    try:
+        db.session().add(user)
+        db.session().commit()
+    except IntegrityError:
+        return render_template('auth/signupForm.html', 
+                                form=form, 
+                                error='Username is occupied.',
+                                role="MASTER"
+                              )
 
     return redirect(url_for('auth_login'))
 
