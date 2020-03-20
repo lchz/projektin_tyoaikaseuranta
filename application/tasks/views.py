@@ -1,6 +1,6 @@
-from application import app, db
+from application import app, db, login_required
 from flask import render_template, request, redirect, url_for, abort
-from flask_login import login_required, current_user
+from flask_login import current_user
 from application.tasks.models import Task
 from application.auth.models import User
 from application.projects.models import Project
@@ -10,15 +10,18 @@ import datetime
 
 
 @app.route('/projects/<project_id>/tasks', methods=['GET'])
-@login_required
+@login_required(role="ANY")
 def tasks_index(project_id):
 
     project = Project.query.get(project_id)
     canSee = False
 
-    for participant in project.participants:
-        if participant.id == current_user.id:
-            canSee = True
+    if (current_user.roles == "MASTER"):
+        canSee = True
+    elif (current_user.roles == "BASIC"):
+        for participant in project.participants:
+            if participant.id == current_user.id:
+                canSee = True
 
     if not canSee:
         return render_template('projects/project.html', 
@@ -34,7 +37,7 @@ def tasks_index(project_id):
 
 
 @app.route('/projects/<project_id>/tasks/<task_id>', methods=['GET'])
-@login_required
+@login_required(role="ANY")
 def task_index(project_id, task_id):
 
     task = Task.query.get(task_id)
@@ -52,13 +55,13 @@ def task_index(project_id, task_id):
 
 
 @app.route('/projects/<project_id>/tasks/new')
-@login_required
+@login_required(role="ANY")
 def tasks_form(project_id):
     return render_template('tasks/taskForm.html', form=TaskForm(), project_id=project_id)
 
 
 @app.route('/projects/<project_id>/tasks', methods=['POST'])
-@login_required
+@login_required(role="ANY")
 def tasks_create(project_id):
     form = TaskForm(request.form)
 
@@ -84,7 +87,7 @@ def tasks_create(project_id):
 
 
 @app.route('/projects/<project_id>/tasks/<task_id>', methods=['POST'])
-@login_required
+@login_required(role="BASIC")
 def tasks_set_done(project_id, task_id):
 
     task = Task.query.get(task_id)
@@ -97,7 +100,7 @@ def tasks_set_done(project_id, task_id):
 
 
 @app.route('/projects/<project_id>/tasks/<task_id>/actualTime', methods=['POST'])
-@login_required
+@login_required(role="BASIC")
 def tasks_set_actualTime(project_id, task_id):
 
     task = Task.query.get(task_id)
@@ -109,6 +112,7 @@ def tasks_set_actualTime(project_id, task_id):
 
 
 @app.route('/projects/<project_id>/tasks/<task_id>/deletion', methods=['POST'])
+@login_required(role="BASIC")
 def task_deletion(project_id, task_id):
 
     try:    
@@ -126,7 +130,7 @@ def task_deletion(project_id, task_id):
 
 
 @app.route('/projects/<project_id>/myTasks', methods=['GET'])
-@login_required
+@login_required(role="BASIC")
 def myTasks(project_id):
 
     project = Project.query.get(project_id)
