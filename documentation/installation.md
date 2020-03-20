@@ -1,6 +1,6 @@
 # Asennusohje
 
-Sovelluksen asentaessa tarvitaan Git ja Python3. Varmista, että ne ovat koneellasi asennettuina ennen sovelluksen lataamista.
+Sovelluksen asentaessa tarvitaan Git ja Python3. Varmistathan, että ne ovat koneellasi asennettuina ennen sovelluksen lataamista.
 
 1. Kloonaa projekti tai lataa se ZIP-pakattuna GitHub:sta
 
