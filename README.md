@@ -20,6 +20,6 @@ Projektipäälikkönä voi luoda uusia projekteja ja tarkistaa projektiin käyte
 |Rooli  | Käyttäjätunnus | Salasana  |
 |:-----:|:--------------:|:---------:|
 |BASIC  |    test        | secret    |
-|       |    test2       | secret2   |
+|BASIC  |    test2       | secret2   |
 |MASTER |    master      | admin     |
 
