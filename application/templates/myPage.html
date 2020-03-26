@@ -2,15 +2,64 @@
 
 {% block body %}
 
+{% if role == "BASIC" %}
 <div>
     <h2>My registrations</h2>
 
-    {% for project in projects %}
-    <div>
-        <a href="{{url_for( 'project_index', project_id=project.id )}}">{{ project.name }} </a>
-    </div>
-    {% endfor %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Created time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+            <tr>
+                <td>
+                    <a href="{{url_for( 'project_index', project_id=project.id )}}">
+                        {{ project.name }} 
+                    </a>
+                </td>
+                <td>
+                    {{ project.date_created.date() }}
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
+{% elif role == "MASTER" %}
+<div>
+    <h2>My Projects</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Created time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+            <tr>
+                <td>
+                    <a href="{{ url_for( 'project_index', project_id=project.id, role='MASTER') }}">
+                        {{ project.name }}
+                    </a>
+                </td>
+                <td>
+                    {{ project.date_created.date() }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 </div>
+{% endif %}
+
 
 {% endblock body %}

@@ -4,11 +4,28 @@
 
 <h2>Projects</h2>
 
-{% for p in projects %}
-<div>
-    <p><a href="{{ url_for('project_index', project_id=p.id) }}">{{ p.name }}</a></p>
-</div>
-{% endfor %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Created time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for project in projects %}
+        <tr>
+            <td>
+                <a href="{{url_for( 'project_index', project_id=project.id )}}">
+                    {{ project.name }} 
+                </a>
+            </td>
+            <td>
+                {{ project.date_created.date() }}
+            </td>
+        </tr>
+        {% endfor %}
 
+    </tbody>
+</table>
 
 {% endblock body %}
