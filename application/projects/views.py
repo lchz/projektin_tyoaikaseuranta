@@ -26,7 +26,8 @@ def project_index(project_id):
     return render_template('/projects/project.html', 
                             project=project, 
                             creator=User.query.get(project.account_id),
-                            canRegister=canRegister
+                            canRegister=canRegister,
+                            role=current_user.get_roles()
                           )
 
 

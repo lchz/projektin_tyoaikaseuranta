@@ -57,6 +57,8 @@ from application.tasks import views
 from application.auth import models
 from application.auth import views
 
+from application.data import views
+
 
 # Logging in
 from application.auth.models import User

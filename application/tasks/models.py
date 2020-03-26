@@ -41,3 +41,20 @@ class Task(Base):
             tasks.append({ 'name': row[0], 'status': row[1] })
 
         return tasks
+
+    @staticmethod
+    def find_project_participants(project_id):
+        stmt = text("SELECT Account.name FROM Account"
+                    " LEFT JOIN registration ON project_id = :project_id"
+                    " WHERE Account.id = registration.account_id"
+                    " GROUP BY Account.name"
+                   ).params(project_id=project_id)
+
+        res = db.engine.execute(stmt)
+
+        names = []
+
+        for row in res:
+            names.append({ 'name': row[0] })
+
+        return names

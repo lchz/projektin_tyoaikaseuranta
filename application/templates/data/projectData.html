@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<h2>Data</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Project participants</th>
+            <th scope="col">Tasks in total</th>
+            <th scope="col">Tasks completed</th>
+            <th scope="col">Tasks uncompleted</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in participants %}
+            <tr>
+                <td> {{ p.name }} </td>
+            </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+{% endblock body %}

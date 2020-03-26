@@ -28,7 +28,8 @@ def tasks_index(project_id):
                                 project=project,
                                 creator=User.query.get(project.account_id),
                                 canRegister=True,
-                                error='Please register first.'
+                                notRegisteredError='Please register first.',
+                                role=current_user.get_roles()
                               )
 
     return render_template('tasks/taskList.html',

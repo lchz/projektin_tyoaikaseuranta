@@ -9,6 +9,7 @@
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Created time</th>
+            <th scope="col">Data</th>
         </tr>
     </thead>
     <tbody>
@@ -21,6 +22,11 @@
             </td>
             <td>
                 {{ project.date_created.date() }}
+            </td>
+            <td>
+                <a href=" {{ url_for('project_data', project_id=project.id) }} ">
+                    Data
+                </a>
             </td>
         </tr>
         {% endfor %}
