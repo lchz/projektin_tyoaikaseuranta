@@ -5,14 +5,21 @@
     <div class="col-md-6">
 
         {% if error %}
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
             {{ error }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         {% endif %}
 
+
         {% for error in form.name.errors or form.username.errors or form.password.errors %}
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
             All fields {{ error[5:] }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         {% endfor %}
 
@@ -27,14 +34,15 @@
                 {{ form.username.label(style="margin-top: 20px;") }} {{ form.username(class="form-control") }}
             </div>
             <div>
-                {{form.password.label(style="margin-top: 20px;")}} {{ form.password(type="password", class="form-control") }}
+                {{form.password.label(style="margin-top: 20px;")}}
+                {{ form.password(type="password", class="form-control") }}
             </div>
             <button class="btn btn-lg btn-primary btn-block" style="margin-top: 20px;" type="submit">
                 Create
             </button>
-                    
         </form>
-        
+
+
         {% elif role == "MASTER" %}
         <form method="POST" action="{{ url_for('auth_signup_master') }} ">
             <h1 class="h3 mb-3 font-weight-normal">Sign Up As A Master</h1>
@@ -45,12 +53,12 @@
                 {{ form.username.label(style="margin-top: 20px;") }} {{ form.username(class="form-control") }}
             </div>
             <div>
-                {{form.password.label(style="margin-top: 20px;")}} {{ form.password(type="password", class="form-control") }}
+                {{form.password.label(style="margin-top: 20px;")}}
+                {{ form.password(type="password", class="form-control") }}
             </div>
             <button class="btn btn-lg btn-primary btn-block" style="margin-top: 20px;" type="submit">
                 Create
             </button>
-                    
         </form>
         {% endif %}
 

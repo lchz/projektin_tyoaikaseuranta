@@ -3,35 +3,67 @@
 {% block body %}
 
 <h2>{{ project.name }} </h2>
-<i>Created by {{ creator.name }} </i>
 
+<table class="table table-striped">
+
+    <tbody>
+        <tr>
+            <th scope="row">Project master</th>
+            <td> {{ creator.name }} </td>
+        </tr>
+        <tr>
+            <th scope="row">Description</th>
+            <td>{{ project.description }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Tasks</th>
+            <td>
+                <a href="{{ url_for('tasks_index', project_id=project.id) }} ">Tasks</a>
+                {% if notRegisteredError %}
+                <span class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ notRegisteredError }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </span>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">Data</th>
+            <td>
+                <a href="{{ url_for('project_data', project_id=project.id) }}">
+                    Details
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+{% if canRegister and role == 'BASIC' %}
+<form method="POST" action="{{ url_for('project_registration', project_id=project.id) }}">
+    <input class="btn btn-primary" type="submit" value="Register" />
+</form>
+{% endif %}
+
+
+{% if role == "BASIC" %}
 <div>
-
-    <h3>Description</h3>
-    <div>
-        {{ project.description }}
-    </div>
-
-    {% if canRegister %}
-    <div>
-        <form method="POST" action="{{ url_for('project_registration', project_id=project.id) }}">
-            <input type="submit" value="Register" />
-        </form>
-    </div>
-    {% endif %}
-
+    <h3>Data</h3>
+    <p>Data of this project, everyone has how many tasks</p>
+    <p>Data of myself, how many tasks for the whole time / for a period</p>
 </div>
+{% endif %}
 
+
+{% if role == "MASTER" %}
 <div>
-    <h3>Tasks</h3>
-    <a href="{{ url_for('tasks_index', project_id=project.id) }} ">Tasks</a>
-    
-    {% if error %}
-    <div>
-        {{ error }}
-    </div>
-    {% endif %}
+    <h3>Data</h3>
+    <p>Data of a participant</p>
+    <p>Data of this project</p>
+    <p>Data of a period</p>
 </div>
+{% endif %}
 
 
 {% endblock body %}

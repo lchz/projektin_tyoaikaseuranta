@@ -6,11 +6,14 @@
     <div class="col-md-6">
 
         {% if error %}
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
             {{ error }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         {% endif %}
-        
+
         <form method="POST" action="{{ url_for('auth_login') }} ">
             <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
             <div>
@@ -19,7 +22,7 @@
             <div>
                 {{ form.password(type="password", class="form-control", style="margin-top: 20px;", placeholder="Password") }}
             </div>
-            <button class="btn btn-lg btn-primary btn-block" style="margin-top: 20px;" type="submit">Sign in</button>     
+            <button class="btn btn-lg btn-primary btn-block" style="margin-top: 20px;" type="submit">Sign in</button>
         </form>
 
     </div>

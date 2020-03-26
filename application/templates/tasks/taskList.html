@@ -3,17 +3,42 @@
 {% block body %}
 <h2>Tasks in <i>{{ project.name }} </i></h2>
 
-<a href="{{ url_for('tasks_form', project_id=project.id) }} ">Add a new task</a>
-<a href=" {{ url_for('myTasks', project_id=project.id) }} ">My tasks</a>
-
-<div>
-    {{ error }}
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="margin-bottom: 10px;">
+    <div class="btn-group mr-2" role="group" aria-label="First group">
+        <a type="button" class="btn btn-primary" href="{{ url_for('tasks_form', project_id=project.id) }} ">
+            Create a new task
+        </a>
+    </div>
+    <div class="btn-group mr-2" role="group" aria-label="Second group">
+        <a type="button" class="btn btn-primary" href=" {{ url_for('myTasks', project_id=project.id) }} ">
+            My tasks
+        </a>
+    </div>
 </div>
 
-<div>
-    {% for task in tasks %}
-        <p><a href=" {{ url_for('task_index', project_id=project.id, task_id=task.id) }} "> {{ task.name }} </a></p>
-    {% endfor %}
-</div>
+
+<table class="table table-striped">
+    <tbody>
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Task details</th>
+            </tr>
+
+        </thead>
+
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.name }}</td>
+            <td>
+                <a href=" {{ url_for('task_index', project_id=project.id, task_id=task.id) }} ">
+                    details
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
 
 {% endblock body %}

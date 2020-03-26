@@ -4,75 +4,107 @@
 
 <div>
     <h2>Task</h2>
-    <table>
-        <tr>
-            <th>Name</th>
-            <td>{{ task.name }}</td>
-        </tr>
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th scope="row">Name</th>
+                <td>{{ task.name }}</td>
+            </tr>
 
-        <tr>
-            <th>Created by</th>
-            <td> {{ creator }} </td>
-        </tr>
-    
-        <tr>
-            <th>Content</th>
-            <td>{{ task.content }}</td>
-        </tr>
-    
-        <tr>
-            <th>Estimated time</th>
-            <td>{{ task.estimatedTime }} hours</td>
-        </tr>
-    
-        <tr>
-            <th>Actual time</th>
-            <td>{{ task.actualTime }} hours</td>
-    
+            <tr>
+                <th scope="row">Created by</th>
+                <td> {{ creator }} </td>
+            </tr>
+
+            <tr>
+                <th scope="row">Created time</th>
+                <td> {{ task.date_created.date() }} </td>
+            </tr>
+
+            <tr>
+                <th scope="row">Content</th>
+                <td>{{ task.content }}</td>
+            </tr>
+
+            <tr>
+                <th scope="row">Estimated time</th>
+                <td>{{ task.estimatedTime }} hours</td>
+            </tr>
+
+            <tr>
+                <th scope="row">Actual time</th>
+                <td colspan="2">{{ task.actualTime }} hours</td>
+            </tr>
+
             {% if authorized and task.actualTime == 0.0 %}
-            <td>
-                <form method="POST" action="{{ url_for('tasks_set_actualTime', task_id=task.id, project_id=projectId) }} ">
-                    <input type="number" name="set_actualTime" step="0.1" />
-                    <input type="submit" value="set actual hours" />
-                </form>
-            </td>
+            <tr>
+                <th>Set used time</th>
+                <td>
+                    <form method="POST"
+                        action="{{ url_for('tasks_set_actualTime', task_id=task.id, project_id=projectId) }} ">
+                        <input type="number" name="set_actualTime" step="0.1" />
+                        <input class="btn btn-success btn-sm" type="submit" value="Set" />
+                    </form>
+                </td>
+            </tr>
             {% endif %}
-    
-        </tr>
-    
-        {% if task.status  %}
-        <tr>
-            <th>Date</th>
-            <td>{{ task.date }}</td>
-        </tr>
-        {% endif %}
-    
-        <tr>
-            <th>Finished</th>
-            <td>{{ task.status }}</td>
-    
+
+            <tr>
+                <th scope="row">Completed</th>
+                <td>{{ task.status }}</td>
+            </tr>
+
             {% if authorized and not task.status %}
-            <td>
-                <form method="POST" action="{{url_for('tasks_set_done', task_id=task.id, project_id=projectId) }} ">
-                    <input type="submit" value="Set as finished!" />
-                </form>
-            </td>
+            <tr>
+                <th>Set completed</th>
+                <td>
+                    <form method="POST" action="{{url_for('tasks_set_done', task_id=task.id, project_id=projectId) }} ">
+                        <input class="btn btn-success" type="submit" value="Completed!" />
+                    </form>
+                </td>
+            </tr>
             {% endif %}
-        </tr>
-        
-        {% if authorized %}
-        <tr>
-            <td></td>
-            <td>
-                <form method="POST" action="{{ url_for('task_deletion', task_id=task.id, project_id=projectId) }} ">
-                    <input type="submit" value="Remove task" />
-                </form>
-            </td>
-        </tr>
-        {% endif %}
-        
-    
+
+            {% if task.status  %}
+            <tr>
+                <th scope="row">Completed date</th>
+                <td>{{ task.date }}</td>
+            </tr>
+            {% endif %}
+
+        </tbody>
     </table>
+
+
+    {% if authorized %}
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeTaskModal" style="margin-bottom: 10px;">
+        Remove task
+    </button>
+
+    <div class="modal fade" id="removeTaskModal" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="removeModalLabel">Attention</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure to delete task [ {{ task.name }} ]? Task cannot be retrieved after deletion.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <form method="POST" action="{{ url_for('task_deletion', task_id=task.id, project_id=projectId) }} ">
+                        <input class="btn btn-danger" type="submit" value="Remove task" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
 </div>
 
 {% endblock body %}
