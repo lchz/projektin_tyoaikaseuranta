@@ -15,7 +15,7 @@ def project_data(project_id):
     data = Task.find_project_participants(project_id)
 
     for d in data:
-        taskData = Task.find_tasks_of_participant(project_id, d.get('accountId'))
+        taskData = Task.find_tasks_of_participant(project.id, d.get('accountId'))
 
         uncom = taskData[0].get('uncom')
         com = taskData[1].get('com')
