@@ -39,7 +39,10 @@ class Task(Base):
         tasks = []
 
         for row in res:
-            tasks.append({ 'name': row[0], 'status': row[1], 'createDate': row[2][:10], 'comDate': row[3], 'id': row[4] })
+            if isinstance(row[2], str):
+                tasks.append({ 'name': row[0], 'status': row[1], 'createDate': row[2][:10], 'comDate': row[3], 'id': row[4] })
+            else:
+                tasks.append({ 'name': row[0], 'status': row[1], 'createDate': row[2].date(), 'comDate': row[3], 'id': row[4] })
 
         return tasks
 
