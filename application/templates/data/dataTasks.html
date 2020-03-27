@@ -34,8 +34,9 @@
             {% for task in tasks %}
             <tr>
                 <td> {{ task.name }} </td>
+                <td> {{ task.createDate.date() }} </td>
 
-                <td> {{ task.createDate[:10] }} </td>
+                <!-- <td> {{ task.createDate[:10] }} </td> -->
 
                 {% if task.status %}
                 <td class="text-success"> completed </td>
