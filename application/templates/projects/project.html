@@ -18,7 +18,7 @@
         <tr>
             <th scope="row">Tasks</th>
             <td>
-                <a href="{{ url_for('tasks_index', project_id=project.id) }} ">Tasks</a>
+                <a href="{{ url_for('tasks_index', project_id=project.id) }} ">view</a>
                 {% if notRegisteredError %}
                 <span class="alert alert-warning alert-dismissible fade show" role="alert">
                     {{ notRegisteredError }}
@@ -29,14 +29,18 @@
                 {% endif %}
             </td>
         </tr>
+
+        {% if role == 'MASTER' %}
         <tr>
             <th scope="row">Data</th>
             <td>
                 <a href="{{ url_for('project_data', project_id=project.id) }}">
-                    Details
+                    details
                 </a>
             </td>
         </tr>
+        {% endif %}
+
     </tbody>
 </table>
 
@@ -59,8 +63,6 @@
 {% if role == "MASTER" %}
 <div>
     <h3>Data</h3>
-    <p>Data of a participant</p>
-    <p>Data of this project</p>
     <p>Data of a period</p>
 </div>
 {% endif %}

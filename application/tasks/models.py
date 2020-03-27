@@ -28,9 +28,10 @@ class Task(Base):
     @staticmethod
     def find_my_tasks(current_id, project_id):
 
-        stmt = text("SELECT Task.name, Task.status FROM Task"
-                    " LEFT JOIN Project ON Project.id = :project_id"
+        stmt = text("SELECT Task.name, Task.status, Task.date_created, Task.date, Task.id FROM Task"
+                    " LEFT JOIN Project ON Project.id = Task.project_id"
                     " WHERE Task.account_id = :current_id"
+                    " AND Task.project_id = :project_id"
                     " GROUP BY Task.id"
                     ).params(current_id=current_id, project_id=project_id)
 
@@ -38,23 +39,56 @@ class Task(Base):
         tasks = []
 
         for row in res:
-            tasks.append({ 'name': row[0], 'status': row[1] })
+            tasks.append({ 'name': row[0], 'status': row[1], 'createDate': row[2], 'comDate': row[3], 'id': row[4] })
 
         return tasks
 
     @staticmethod
     def find_project_participants(project_id):
-        stmt = text("SELECT Account.name FROM Account"
-                    " LEFT JOIN registration ON project_id = :project_id"
-                    " WHERE Account.id = registration.account_id"
+
+        stmt = text("SELECT Account.id, Account.name FROM Registration"
+                    " LEFT JOIN Account ON Registration.account_id = Account.id"
+                    " WHERE Registration.project_id = :project_id"
                     " GROUP BY Account.name"
-                   ).params(project_id=project_id)
+                    ).params(project_id=project_id)
 
         res = db.engine.execute(stmt)
-
-        names = []
+        data = []
 
         for row in res:
-            names.append({ 'name': row[0] })
+            data.append({ 'accountId': row[0], 'name': row[1] })
 
-        return names
+        return data
+
+
+    @staticmethod
+    def find_tasks_of_participant(project_id, account_id):
+
+        stmt1 = text("SELECT COUNT(Task.id) from Task"
+                    " LEFT JOIN Project ON Project.id = Task.project_id"
+                    " LEFT JOIN Account ON Account.id = Task.account_id"
+                    " WHERE Project.id = :project_id"
+                    " AND Account.id = :account_id"
+                    " AND Task.status = 0"
+                    ).params(project_id=project_id, account_id=account_id)
+
+        stmt2 = text("SELECT COUNT(Task.id) from Task"
+                    " LEFT JOIN Project ON Project.id = Task.project_id"
+                    " LEFT JOIN Account ON Account.id = Task.account_id"
+                    " WHERE Project.id = :project_id"
+                    " AND Account.id = :account_id"
+                    " AND Task.status = 1"
+                    ).params(project_id=project_id, account_id=account_id)
+
+        res1 = db.engine.execute(stmt1)
+        res2 = db.engine.execute(stmt2)
+
+        taskData = []
+
+        for row in res1:
+            taskData.append({ 'uncom': row[0] })
+
+        for row in res2:
+            taskData.append({ 'com': row[0] })
+
+        return taskData

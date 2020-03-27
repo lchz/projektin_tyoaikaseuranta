@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<h2>Data of {{project.name}} </h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Project participants</th>
+            <th scope="col">Tasks in total</th>
+            <th scope="col">Tasks completed</th>
+            <th scope="col">Tasks uncompleted</th>
+            <th scope="col">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for d in data %}
+            <tr>
+                <td> {{ d.name }} </td>
+                <td> {{ d.total }} </td>
+                <td> {{ d.com }} </td>
+                <td> {{ d.uncom }} </td>
+                <td>
+                    <a href=" {{ url_for('tasks_data_of_participart', project_id=project.id, account_id=d.accountId) }} ">
+                        view
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+{% endblock body %}

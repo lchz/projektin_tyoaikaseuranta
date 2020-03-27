@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div>
+    <h2> Tasks data </h2>
+    <table class="table table-striped" style="margin-bottom: 50px;">
+        <tbody>
+            <tr>
+                <th scope="row">Project name</th>
+                <td> {{ project.name }} </td>
+            </tr>
+            <tr>
+                <th scope="row">Participant name</th>
+                <td> {{ account.name }} </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4> Tasks in total </h4>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Task name</th>
+                <th scope="col">Created on</th>
+                <th scope="col">Task status</th>
+                <th scope="col">Completed on</th>
+                <th scope="col">Task details</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td> {{ task.name }} </td>
+
+                <td> {{ task.createDate[:10] }} </td>
+
+                {% if task.status %}
+                <td class="text-success"> completed </td>
+                <td> {{ task.comDate }} </td>
+                {% else %}
+                <td class="text-danger"> uncompleted </td>
+                <td>-</td>
+                {% endif %}
+
+                <td>
+                    <a href=" {{ url_for('task_index', project_id=project.id, task_id=task.id) }} ">
+                        view
+                    </a>
+                </td>
+
+            </tr>
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+</div>
+
+{% endblock body %}

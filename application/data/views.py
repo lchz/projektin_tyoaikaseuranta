@@ -7,14 +7,36 @@ from application.auth.models import User
 from application.tasks.models import Task
 
 
-
 @app.route('/projects/<project_id>/data', methods=['GET'])
 @login_required(role='MASTER')
 def project_data(project_id):
 
     project = Project.query.get(project_id)
-    participants = Task.find_project_participants(project_id)
+    data = Task.find_project_participants(project_id)
 
-    return render_template('/data/projectData.html', 
-                            project=project,
-                            participants=participants)
+    for d in data:
+        taskData = Task.find_tasks_of_participant(project_id, d.get('accountId'))
+
+        uncom = taskData[0].get('uncom')
+        com = taskData[1].get('com')
+
+        d['total'] = uncom + com
+        d['uncom'] = uncom
+        d['com'] = com
+
+    return render_template('/data/dataProject.html',
+                           project=project,
+                           data=data)
+
+@app.route('/projects/<project_id>/data/tasks/<account_id>', methods=['GET'])
+@login_required(role="ANY")
+def tasks_data_of_participart(project_id, account_id):
+
+    account = User.query.get(account_id)
+    project = Project.query.get(project_id)
+    tasks = Task.find_my_tasks(account_id, project_id)
+
+    return render_template('data/dataTasks.html', 
+                            account=account,
+                            project=project, 
+                            tasks=tasks)
