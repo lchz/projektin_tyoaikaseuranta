@@ -46,10 +46,10 @@ class Task(Base):
     @staticmethod
     def find_project_participants(project_id):
 
-        stmt = text("SELECT Account.id, Account.name, COUNT(Account.id) FROM Registration"
+        stmt = text("SELECT Account.id, Account.name FROM Registration"
                     " LEFT JOIN Account ON Registration.account_id = Account.id"
                     " WHERE Registration.project_id = :project_id"
-                    " GROUP BY Account.name"
+                    " GROUP BY Account.id"
                     ).params(project_id=project_id)
 
         res = db.engine.execute(stmt)
