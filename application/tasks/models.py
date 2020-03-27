@@ -69,7 +69,7 @@ class Task(Base):
                     " LEFT JOIN Account ON Account.id = Task.account_id"
                     " WHERE Project.id = :project_id"
                     " AND Account.id = :account_id"
-                    " AND Task.status = 0"
+                    " AND Task.status = False"
                     ).params(project_id=project_id, account_id=account_id)
 
         stmt2 = text("SELECT COUNT(Task.id) from Task"
@@ -77,7 +77,7 @@ class Task(Base):
                     " LEFT JOIN Account ON Account.id = Task.account_id"
                     " WHERE Project.id = :project_id"
                     " AND Account.id = :account_id"
-                    " AND Task.status = 1"
+                    " AND Task.status = True"
                     ).params(project_id=project_id, account_id=account_id)
 
         res1 = db.engine.execute(stmt1)
