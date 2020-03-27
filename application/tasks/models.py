@@ -1,6 +1,6 @@
 from application import db
 from application.models import Base
-from sqlalchemy.sql import text 
+from sqlalchemy.sql import text
 from datetime import datetime
 
 
@@ -23,7 +23,6 @@ class Task(Base):
         self.date = date
         self.status = status
         self.actualTime = actualTime
-
 
     @staticmethod
     def find_my_tasks(current_id, project_id):
@@ -59,29 +58,28 @@ class Task(Base):
         data = []
 
         for row in res:
-            data.append({ 'accountId': row[0], 'name': row[1] })
+            data.append({'accountId': row[0], 'name': row[1]})
 
         return data
-
 
     @staticmethod
     def find_tasks_of_participant(project_id, account_id):
 
         stmt1 = text("SELECT COUNT(Task.id) from Task"
-                    " LEFT JOIN Project ON Project.id = Task.project_id"
-                    " LEFT JOIN Account ON Account.id = Task.account_id"
-                    " WHERE Project.id = :project_id"
-                    " AND Account.id = :account_id"
-                    " AND Task.status = False"
-                    ).params(project_id=project_id, account_id=account_id)
+                     " LEFT JOIN Project ON Project.id = Task.project_id"
+                     " LEFT JOIN Account ON Account.id = Task.account_id"
+                     " WHERE Project.id = :project_id"
+                     " AND Account.id = :account_id"
+                     " AND Task.status = False"
+                     ).params(project_id=project_id, account_id=account_id)
 
         stmt2 = text("SELECT COUNT(Task.id) from Task"
-                    " LEFT JOIN Project ON Project.id = Task.project_id"
-                    " LEFT JOIN Account ON Account.id = Task.account_id"
-                    " WHERE Project.id = :project_id"
-                    " AND Account.id = :account_id"
-                    " AND Task.status = True"
-                    ).params(project_id=project_id, account_id=account_id)
+                     " LEFT JOIN Project ON Project.id = Task.project_id"
+                     " LEFT JOIN Account ON Account.id = Task.account_id"
+                     " WHERE Project.id = :project_id"
+                     " AND Account.id = :account_id"
+                     " AND Task.status = True"
+                     ).params(project_id=project_id, account_id=account_id)
 
         res1 = db.engine.execute(stmt1)
         res2 = db.engine.execute(stmt2)
@@ -89,9 +87,9 @@ class Task(Base):
         taskData = []
 
         for row in res1:
-            taskData.append({ 'uncom': row[0] })
+            taskData.append({'uncom': row[0]})
 
         for row in res2:
-            taskData.append({ 'com': row[0] })
+            taskData.append({'com': row[0]})
 
         return taskData
