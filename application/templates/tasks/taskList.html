@@ -3,6 +3,8 @@
 {% block body %}
 <h2>Tasks in <i>{{ project.name }} </i></h2>
 
+
+{% if role == 'BASIC' %}
 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="margin-bottom: 10px;">
     <div class="btn-group mr-2" role="group" aria-label="First group">
         <a type="button" class="btn btn-primary" href="{{ url_for('tasks_form', project_id=project.id) }} ">
@@ -15,6 +17,7 @@
         </a>
     </div>
 </div>
+{% endif %}
 
 
 <table class="table table-striped">
@@ -32,7 +35,7 @@
             <td>{{ task.name }}</td>
             <td>
                 <a href=" {{ url_for('task_index', project_id=project.id, task_id=task.id) }} ">
-                    details
+                    view
                 </a>
             </td>
         </tr>

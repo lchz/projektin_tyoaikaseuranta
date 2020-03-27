@@ -35,7 +35,8 @@ def tasks_index(project_id):
     return render_template('tasks/taskList.html',
                            tasks=Task.query.filter_by(project_id=project_id),
                            project=project,
-                           account_id=current_user.id)
+                           account_id=current_user.id,
+                           role=current_user.roles)
 
 
 @app.route('/projects/<project_id>/tasks/<task_id>', methods=['GET'])
