@@ -39,7 +39,7 @@ class Task(Base):
         tasks = []
 
         for row in res:
-            tasks.append({ 'name': row[0], 'status': row[1], 'createDate': row[2], 'comDate': row[3], 'id': row[4] })
+            tasks.append({ 'name': row[0], 'status': row[1], 'createDate': row[2][:10], 'comDate': row[3], 'id': row[4] })
 
         return tasks
 
