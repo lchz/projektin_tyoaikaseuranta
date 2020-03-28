@@ -5,6 +5,10 @@ registration_table = db.Table('registration',
     db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True),
     db.Column('account_id', db.Integer, db.ForeignKey('account.id'), primary_key=True)
 )
+user_role_table = db.Table('user_role',
+    db.Column('role_id', db.Integer, db.ForeignKey('role.id'), primary_key=True),
+    db.Column('account_id', db.Integer, db.ForeignKey('account.id'), primary_key=True)
+)
 
 class User(Base):
     __tablename__ = 'account'
@@ -13,14 +17,17 @@ class User(Base):
     username = db.Column(db.String(144), nullable=False, unique=True)
     password = db.Column(db.String(144), nullable=False)
 
-    roles = db.Column(db.String(144), nullable=False)
-
     tasks = db.relationship('Task', backref='account', lazy=True)
     
     registrations = db.relationship('Project', 
                                     secondary=registration_table, 
                                     backref=db.backref('participants', lazy=True), 
                                     lazy=True )
+
+    roles = db.relationship('Role', 
+                            secondary=user_role_table, 
+                            backref=db.backref('accounts', lazy=True),
+                            lazy=True)
 
     # Only MASTER can create projects
     created_projects = db.relationship('Project', backref='account', lazy=True)
@@ -42,6 +49,3 @@ class User(Base):
 
     def is_authenticated(self):
         return True
-
-    def get_roles(self):
-        return self.roles

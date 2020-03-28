@@ -36,8 +36,14 @@ def login_required(_func=None, *, role="ANY"):
             if not (current_user and current_user.is_authenticated):
                 return login_manager.unauthorized()
 
-            accetable_roles = set(("ANY", current_user.get_roles()))
-            if role not in accetable_roles:
+            ok = False
+            if role == 'ANY':
+                ok = True
+            for r in current_user.roles:
+                if r.name == role:
+                    ok = True
+                    break
+            if not ok:
                 return login_manager.unauthorized()
 
             return func(*args, **kwargs)
@@ -59,6 +65,8 @@ from application.auth import views
 
 from application.data import views
 
+from application.roles import models
+
 
 # Logging in
 from application.auth.models import User
@@ -70,5 +78,15 @@ def load_user(user_id):
 
 try:
     db.create_all()
+except:
+    pass
+
+try:
+    from application.roles.models import Role
+    basic_role = Role(name='BASIC')
+    db.session.add(basic_role)
+    master_role = Role(name='MASTER')
+    db.session.add(master_role)
+    db.session.commit()
 except:
     pass

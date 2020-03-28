@@ -27,7 +27,7 @@ def project_index(project_id):
                             project=project, 
                             creator=User.query.get(project.account_id),
                             canRegister=canRegister,
-                            role=current_user.get_roles()
+                            role=current_user.roles[0].name
                           )
 
 

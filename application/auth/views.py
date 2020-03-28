@@ -7,6 +7,8 @@ from application.auth.models import User
 from application.auth.forms import LoginForm
 from application.auth.forms import SignupForm
 
+from application.roles.models import Role
+
 
 @app.route('/auth/login', methods=['GET', 'POST'])
 def auth_login():
@@ -41,7 +43,8 @@ def auth_signup_basic():
         return render_template('auth/signupForm.html', form=form, role="BASIC")
 
     user = User(form.name.data, form.username.data, form.password.data)
-    user.roles = "BASIC"
+    basic_role = Role.query.filter_by(name='BASIC').first()
+    user.roles = [basic_role,]
 
     try:
         db.session().add(user)
@@ -67,7 +70,8 @@ def auth_signup_master():
         return render_template('auth/signupForm.html', form=form, role="MASTER")
 
     user = User(form.name.data, form.username.data, form.password.data)
-    user.roles = "MASTER"
+    master_role = Role.query.filter_by(name='MASTER').first()
+    user.roles = [master_role,]
 
     try:
         db.session().add(user)

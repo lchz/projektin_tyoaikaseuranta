@@ -16,12 +16,15 @@ def tasks_index(project_id):
     project = Project.query.get(project_id)
     canSee = False
 
-    if (current_user.roles == "MASTER"):
+    role = current_user.roles[0].name
+
+    if (role == "MASTER"):
         canSee = True
-    elif (current_user.roles == "BASIC"):
+    elif (role == "BASIC"):
         for participant in project.participants:
             if participant.id == current_user.id:
                 canSee = True
+                break
 
     if not canSee:
         return render_template('projects/project.html', 
@@ -29,14 +32,14 @@ def tasks_index(project_id):
                                 creator=User.query.get(project.account_id),
                                 canRegister=True,
                                 notRegisteredError='Please register first.',
-                                role=current_user.get_roles()
+                                role=role
                               )
 
     return render_template('tasks/taskList.html',
                            tasks=Task.query.filter_by(project_id=project_id),
                            project=project,
                            account_id=current_user.id,
-                           role=current_user.roles)
+                           role=role)
 
 
 @app.route('/projects/<project_id>/tasks/<task_id>', methods=['GET'])

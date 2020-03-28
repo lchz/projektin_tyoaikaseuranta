@@ -15,9 +15,11 @@ def index():
 @login_required
 def myPage():
 
-    if current_user.get_roles() == 'MASTER':
+    role = current_user.roles[0].name
+    
+    if role == 'MASTER':
         projects = current_user.created_projects
     else:
         projects = current_user.registrations
 
-    return render_template('myPage.html', projects=projects, role=current_user.get_roles())
+    return render_template('myPage.html', projects=projects, role=role)
