@@ -38,11 +38,11 @@
 
             {% if authorized and task.actualTime == 0.0 %}
             <tr>
-                <th>Set used time</th>
+                <th>Set actual time</th>
                 <td>
                     <form method="POST"
                         action="{{ url_for('tasks_set_actualTime', task_id=task.id, project_id=projectId) }} ">
-                        <input type="number" name="set_actualTime" step="0.1" />
+                        <input type="number" name="set_actualTime" step="0.1" placeholder="Only when task is completed" />
                         <input class="btn btn-success btn-sm" type="submit" value="Set" />
                     </form>
                 </td>
@@ -53,17 +53,6 @@
                 <th scope="row">Completed</th>
                 <td>{{ task.status }}</td>
             </tr>
-
-            {% if authorized and not task.status %}
-            <tr>
-                <th>Set completed</th>
-                <td>
-                    <form method="POST" action="{{url_for('tasks_set_done', task_id=task.id, project_id=projectId) }} ">
-                        <input class="btn btn-success" type="submit" value="Completed!" />
-                    </form>
-                </td>
-            </tr>
-            {% endif %}
 
             {% if task.status  %}
             <tr>

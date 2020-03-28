@@ -6,6 +6,7 @@ from application.auth.models import User
 from application.projects.models import Project
 from application.tasks.forms import TaskForm
 
+
 import datetime
 
 
@@ -94,29 +95,30 @@ def tasks_create(project_id):
     return redirect(url_for('tasks_index', project_id=project_id))
 
 
-@app.route('/projects/<project_id>/tasks/<task_id>', methods=['POST'])
-@login_required(role="BASIC")
-def tasks_set_done(project_id, task_id):
-
-    task = Task.query.get(task_id)
-    task.status = True
-    task.date = datetime.datetime.now().date()
-
-    db.session().commit()
-
-    return redirect(url_for('tasks_index', project_id=project_id))
-
-
 @app.route('/projects/<project_id>/tasks/<task_id>/actualTime', methods=['POST'])
 @login_required(role="BASIC")
 def tasks_set_actualTime(project_id, task_id):
 
     task = Task.query.get(task_id)
-    task.actualTime = request.form.get('set_actualTime')
+    creator = User.query.get(task.account_id)
 
-    db.session().commit()
+    authorized = False
+    if creator.id == current_user.id:
+        authorized = True
 
-    return redirect(url_for('tasks_index', project_id=project_id))
+    try:
+        task.actualTime = request.form.get('set_actualTime')
+        task.status = True
+        task.date = datetime.datetime.now().date()
+        db.session().commit()
+    except:
+        db.session.rollback()
+    
+    return render_template('tasks/task.html',
+                        task=task,
+                        creator=creator.name,
+                        authorized=authorized,
+                        projectId=project_id)
 
 
 @app.route('/projects/<project_id>/tasks/<task_id>/deletion', methods=['POST'])
