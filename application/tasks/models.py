@@ -2,6 +2,7 @@ from application import db
 from application.models import Base
 from sqlalchemy.sql import text
 from datetime import datetime
+import os
 
 
 class Task(Base):
@@ -37,11 +38,18 @@ class Task(Base):
         res = db.engine.execute(stmt)
         tasks = []
 
-        for row in res:
-            if isinstance(row[2], str):
-                tasks.append({ 'name': row[0], 'status': row[1], 'createDate': row[2][:10], 'comDate': row[3], 'id': row[4] })
-            else:
+        if os.environ.get('HEROKU'):
+            for row in res:
                 tasks.append({ 'name': row[0], 'status': row[1], 'createDate': row[2].date(), 'comDate': row[3], 'id': row[4] })
+        else:
+            for row in res:
+                tasks.append({ 'name': row[0], 'status': row[1], 'createDate': row[2][:10], 'comDate': row[3], 'id': row[4] })
+
+        # for row in res:
+        #     if isinstance(row[2], str):
+        #         tasks.append({ 'name': row[0], 'status': row[1], 'createDate': row[2][:10], 'comDate': row[3], 'id': row[4] })
+        #     else:
+        #         tasks.append({ 'name': row[0], 'status': row[1], 'createDate': row[2].date(), 'comDate': row[3], 'id': row[4] })
 
         return tasks
 

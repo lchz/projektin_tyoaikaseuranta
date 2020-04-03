@@ -30,7 +30,7 @@ def project_data(project_id):
 
 @app.route('/projects/<project_id>/data/tasks/<account_id>', methods=['GET'])
 @login_required(role="ANY")
-def tasks_data_of_participart(project_id, account_id):
+def tasks_data_of_participant(project_id, account_id):
 
     account = User.query.get(account_id)
     project = Project.query.get(project_id)
