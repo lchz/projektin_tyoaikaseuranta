@@ -75,16 +75,11 @@ def tasks_create(project_id):
     if not form.validate():
         return render_template('tasks/taskForm.html', form=form, project_id=project_id)
 
-    status = form.status.data
     date = datetime.date(1999, 9, 19)
     actualTime = 0.0
 
-    if status:
-        date = datetime.datetime.now().date()
-        actualTime = form.estimatedTime.data
-
     task = Task(form.name.data, form.content.data,
-                form.estimatedTime.data, actualTime, date, status)
+                form.estimatedTime.data, actualTime, date, False)
 
     task.account_id = current_user.id
     task.project_id = project_id

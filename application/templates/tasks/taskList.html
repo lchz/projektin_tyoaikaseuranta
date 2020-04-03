@@ -1,8 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<h2>Tasks in <i>{{ project.name }} </i></h2>
-
+<h2>Tasks in {{ project.name }}</h2>
 
 {% if role == 'BASIC' %}
 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="margin-bottom: 10px;">
