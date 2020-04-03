@@ -15,21 +15,32 @@
         </tr>
     </thead>
     <tbody>
-        {% for d in data %}
-            <tr>
-                <td> {{ d.name }} </td>
-                <td> {{ d.total }} </td>
-                <td> {{ d.com }} </td>
-                <td> {{ d.uncom }} </td>
-                <td>
-                    <a href=" {{ url_for('tasks_data_of_participant', project_id=project.id, account_id=d.accountId) }} ">
-                        view
-                    </a>
-                </td>
-            </tr>
+        {% for d in data|sort(attribute='total,com', reverse=True) %}
+        <tr>
+            <td> {{ d.name }} </td>
+            <td> {{ d.total }} </td>
+            <td> {{ d.com }} </td>
+            <td> {{ d.uncom }} </td>
+            <td>
+                <a href=" {{ url_for('tasks_data_of_participant', project_id=project.id, account_id=d.accountId) }} ">
+                    view
+                </a>
+            </td>
+        </tr>
         {% endfor %}
 
     </tbody>
 </table>
+
+<h2> Time of the project </h2>
+
+{% for t in timeData %}
+<div>
+    Estimated time: {{ t.estimated }} hours
+</div>
+<div>
+    Actual time: {{ t.actual }} hours
+</div>
+{% endfor %}
 
 {% endblock body %}

@@ -17,7 +17,7 @@
             </tr>
 
             <tr>
-                <th scope="row">Created time</th>
+                <th scope="row">Created on</th>
                 <td> {{ task.date_created.date() }} </td>
             </tr>
 
@@ -56,7 +56,7 @@
 
             {% if task.status  %}
             <tr>
-                <th scope="row">Completed date</th>
+                <th scope="row">Completed on</th>
                 <td>{{ task.date }}</td>
             </tr>
             {% endif %}

@@ -45,12 +45,6 @@ class Task(Base):
             for row in res:
                 tasks.append({ 'name': row[0], 'status': row[1], 'createDate': row[2][:10], 'comDate': row[3], 'id': row[4] })
 
-        # for row in res:
-        #     if isinstance(row[2], str):
-        #         tasks.append({ 'name': row[0], 'status': row[1], 'createDate': row[2][:10], 'comDate': row[3], 'id': row[4] })
-        #     else:
-        #         tasks.append({ 'name': row[0], 'status': row[1], 'createDate': row[2].date(), 'comDate': row[3], 'id': row[4] })
-
         return tasks
 
     @staticmethod
@@ -101,3 +95,37 @@ class Task(Base):
             taskData.append({'com': row[0]})
 
         return taskData
+
+    @staticmethod
+    def time_of_project(project_id):
+        stmt = text("SELECT SUM(estimatedTime), SUM(actualTime) FROM Task"
+                    " LEFT JOIN Project ON Project.id = Task.project_id"
+                    " WHERE Project.id = :project_id"
+                    ).params(project_id=project_id)
+
+        res = db.engine.execute(stmt)
+
+        timeProject = []
+
+        for row in res:
+            timeProject.append({ 'estimated': row[0], 'actual': row[1] })
+
+        return timeProject
+
+    @staticmethod
+    def time_of_person(project_id, account_id):
+        stmt = text("SELECT SUM(estimatedTime), SUM(actualTime) FROM Task"
+                    " LEFT JOIN Account ON Account.id = Task.account_id"
+                    " LEFT JOIN Project ON Project.id = Task.project_id"
+                    " WHERE Account.id = :account_id"
+                    " AND Project.id = :project_id"
+                    ).params(project_id=project_id, account_id=account_id)
+
+        res = db.engine.execute(stmt)
+        
+        timePerson = []
+
+        for row in res:
+            timePerson.append({ 'estimated': row[0], 'actual': row[1] })
+
+        return timePerson

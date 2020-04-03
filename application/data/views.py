@@ -13,6 +13,7 @@ def project_data(project_id):
 
     project = Project.query.get(project_id)
     data = Task.find_project_participants(project_id)
+    timeData = Task.time_of_project(project_id)
 
     for d in data:
         taskData = Task.find_tasks_of_participant(project.id, d.get('accountId'))
@@ -26,7 +27,8 @@ def project_data(project_id):
 
     return render_template('/data/dataProject.html',
                            project=project,
-                           data=data)
+                           data=data,
+                           timeData=timeData)
 
 @app.route('/projects/<project_id>/data/tasks/<account_id>', methods=['GET'])
 @login_required(role="ANY")
@@ -35,8 +37,11 @@ def tasks_data_of_participant(project_id, account_id):
     account = User.query.get(account_id)
     project = Project.query.get(project_id)
     tasks = Task.find_my_tasks(account_id, project_id)
+    timeData = Task.time_of_person(project_id, account_id)
 
     return render_template('data/dataTasks.html', 
                             account=account,
                             project=project, 
-                            tasks=tasks)
+                            tasks=tasks,
+                            timeData=timeData)
+

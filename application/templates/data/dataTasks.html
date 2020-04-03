@@ -14,6 +14,14 @@
                 <th scope="row">Participant</th>
                 <td> {{ account.name }} </td>
             </tr>
+            <tr>
+                <th scope="row">Estimated hours</th>
+                <td> {{ timeData[0].estimated }} </td>
+            </tr>
+            <tr>
+                <th scope="row">Actual hours</th>
+                <td> {{ timeData[0].actual }} </td>
+            </tr>
         </tbody>
     </table>
 
@@ -31,7 +39,7 @@
         </thead>
 
         <tbody>
-            {% for task in tasks %}
+            {% for task in tasks|sort(attribute='createDate', reverse=True) %}
             <tr>
                 <td> {{ task.name }} </td>
                 <td> {{ task.createDate }} </td>
