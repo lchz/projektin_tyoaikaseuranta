@@ -2,10 +2,13 @@
 
 [Heroku](https://tsoha-py-tyoaikaseuranta.herokuapp.com/)
 
+[Asennusohje](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/documentation/installation.md)
+
+[Käyttöohje](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/documentation/manual.md)
+
 [Tietokantakaavio](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/documentation/tietokantakaavio.png)
 
 [User story](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/documentation/User_stories.md)
-
 
 ## Kuvaus
 
