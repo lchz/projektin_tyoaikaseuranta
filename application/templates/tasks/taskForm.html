@@ -4,9 +4,30 @@
 <div class="row d-flex justify-content-center">
     <div class="col-md-6">
 
-        {% for error in form.name.errors or form.content.errors %}
-        <div class="alert alert-danger" role="alert">
-            Task name and content {{ error[5:] }}
+        {% for error in form.name.errors %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Name {{ error[5:] }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+
+        {% for error in form.content.errors %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Content {{ error[5:] }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+
+        {% for error in form.estimatedTime.errors %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Estimated time {{ error[6:] }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         {% endfor %}
 

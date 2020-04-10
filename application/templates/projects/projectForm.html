@@ -6,11 +6,21 @@
     <div class="col-md-6">
 
         {% for error in form.name.errors %}
-        <div>{{ error }} </div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Name {{ error[5:] }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         {% endfor %}
 
         {% for error in form.description.errors %}
-        <div>{{ error }} </div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Description {{ error[5:] }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         {% endfor %}
 
         <form method="POST" action="{{ url_for('projects_create')}} ">

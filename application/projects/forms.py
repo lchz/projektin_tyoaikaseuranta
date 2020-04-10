@@ -4,9 +4,9 @@ from wtforms import StringField, TextAreaField, BooleanField, DecimalField, vali
 
 class ProjectForm(FlaskForm):
     name = StringField(
-        'Name:', [validators.length(min=5), validators.required()])
+        'Name:', [validators.length(min=5, max=144), validators.required()])
     description = TextAreaField(
-        'Description:', [validators.length(min=5), validators.required()])
+        'Description:', [validators.length(min=5, max=1000), validators.required()])
 
     class Meta:
         csrf = False

@@ -64,7 +64,9 @@ def task_index(project_id, task_id):
 @app.route('/projects/<project_id>/tasks/new')
 @login_required(role="ANY")
 def tasks_form(project_id):
-    return render_template('tasks/taskForm.html', form=TaskForm(), project_id=project_id)
+    return render_template('tasks/taskForm.html', 
+                            form=TaskForm(), 
+                            project_id=project_id)
 
 
 @app.route('/projects/<project_id>/tasks', methods=['POST'])
@@ -86,7 +88,7 @@ def tasks_create(project_id):
 
     db.session().add(task)
     db.session().commit()
-
+    
     return redirect(url_for('tasks_index', project_id=project_id))
 
 

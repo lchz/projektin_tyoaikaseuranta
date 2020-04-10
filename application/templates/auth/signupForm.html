@@ -13,10 +13,27 @@
         </div>
         {% endif %}
 
-
-        {% for error in form.name.errors or form.username.errors or form.password.errors %}
+        {% for error in form.name.errors %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            All fields {{ error[5:] }}
+            Name {{ error[5:] }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+
+        {% for error in form.username.errors %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Username {{ error[5:] }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+
+        {% for error in form.password.errors %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Password {{ error[5:] }}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -41,7 +58,6 @@
                 Create
             </button>
         </form>
-
 
         {% elif role == "MASTER" %}
         <form method="POST" action="{{ url_for('auth_signup_master') }} ">

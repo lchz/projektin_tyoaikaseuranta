@@ -10,9 +10,9 @@ class LoginForm(FlaskForm):
         csrf = False
 
 class SignupForm(FlaskForm):
-    name = StringField("Name:", [validators.required(), validators.length(min=3)])
-    username = StringField("Username:", [validators.required(), validators.length(min=3)])
-    password = PasswordField("Password:", [validators.required(), validators.length(min=3)])
+    name = StringField("Name:", [validators.required(), validators.length(min=3, max=5)])
+    username = StringField("Username:", [validators.required(), validators.length(min=3, max=5)])
+    password = PasswordField("Password:", [validators.required(), validators.length(min=3, max=5)])
     
     class Meta:
         csrf = False
