@@ -4,8 +4,8 @@ from wtforms import StringField, TextAreaField, BooleanField, DecimalField, vali
 
 class TaskForm(FlaskForm):
     name = StringField(
-        'Name:', [validators.length(min=5, max=10), validators.required()])
-    content = TextAreaField('Content:', [validators.length(min=5, max=10)])
+        'Name:', [validators.length(min=5, max=144), validators.required()])
+    content = TextAreaField('Content:', [validators.length(min=5, max=1000)])
     estimatedTime = DecimalField(
         'Estimated time:', [validators.required(), validators.NumberRange(min=0.0, max=100.0)])
 

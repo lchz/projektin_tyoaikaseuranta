@@ -5,9 +5,13 @@ from flask_login import current_user
 from application.projects.models import Project
 from application.auth.models import User
 from application.tasks.models import Task
+from application.data.forms import DataForm
+
+from datetime import datetime
+from datetime import timedelta
 
 
-@app.route('/projects/<project_id>/data', methods=['GET'])
+@app.route('/projects/<project_id>/data', methods=['GET', 'POST'])
 @login_required(role='MASTER')
 def project_data(project_id):
 
@@ -20,15 +24,41 @@ def project_data(project_id):
 
         uncom = taskData[0].get('uncom')
         com = taskData[1].get('com')
+        total = taskData[2].get('total')
 
-        d['total'] = uncom + com
+        # d['total'] = uncom + com
+        d['total'] = total
         d['uncom'] = uncom
         d['com'] = com
 
+    timeWeek = None
+    fromDate = None
+    toDate = None
+
+    if request.method == 'POST':
+        form = DataForm(request.form)
+
+        if not form.validate():
+            return render_template('/data/dataProject.html',
+                        form=DataForm(),
+                        project=project,
+                        data=data,
+                        timeData=timeData)
+
+        fromDate = form.fromDate.data
+        toDate = fromDate + timedelta(days=7)
+
+        timeWeek = Task.time_of_one_week(project_id, fromDate, toDate, None)
+
     return render_template('/data/dataProject.html',
-                           project=project,
-                           data=data,
-                           timeData=timeData)
+                            form=DataForm(),
+                            project=project,
+                            data=data,
+                            timeData=timeData,
+                            timeWeek=timeWeek,
+                            fromDate=fromDate,
+                            toDate=toDate)
+
 
 @app.route('/projects/<project_id>/data/tasks/<account_id>', methods=['GET'])
 @login_required(role="ANY")
@@ -44,4 +74,4 @@ def tasks_data_of_participant(project_id, account_id):
                             project=project, 
                             tasks=tasks,
                             timeData=timeData)
-
+    

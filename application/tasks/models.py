@@ -83,8 +83,18 @@ class Task(Base):
                      " AND Task.status = True"
                      ).params(project_id=project_id, account_id=account_id)
 
+        stmt3 = text("SELECT COUNT(Task.id) from Task"
+                     " LEFT JOIN Project ON Project.id = Task.project_id"
+                     " LEFT JOIN Account ON Account.id = Task.account_id"
+                     " WHERE Project.id = :project_id"
+                     " AND Account.id = :account_id"
+                     ).params(project_id=project_id, account_id=account_id)
+
+
         res1 = db.engine.execute(stmt1)
         res2 = db.engine.execute(stmt2)
+        res3 = db.engine.execute(stmt3)
+
 
         taskData = []
 
@@ -93,6 +103,9 @@ class Task(Base):
 
         for row in res2:
             taskData.append({'com': row[0]})
+
+        for row in res3:
+            taskData.append({'total': row[0]})
 
         return taskData
 
@@ -129,3 +142,35 @@ class Task(Base):
             timePerson.append({ 'estimated': row[0], 'actual': row[1] })
 
         return timePerson
+
+    @staticmethod
+    def time_of_one_week(project_id, fromDate, toDate, account_id):
+
+        if account_id is not None:
+            stmt = text("SELECT SUM(estimatedTime), SUM(actualTime) FROM Task"
+                        " LEFT JOIN Project ON project.id = Task.project_id"
+                        " WHERE project.id = :project_id"
+                        " AND Task.date_modified >= :fromDate"
+                        " AND Task.date_modified <= :toDate"
+                        " AND Task.account_id = :account_id"
+                        ).params(project_id=project_id, 
+                                fromDate=fromDate, 
+                                toDate=toDate,
+                                account_id=account_id)
+        else:
+            stmt = text("SELECT SUM(estimatedTime), SUM(actualTime) FROM Task"
+                        " LEFT JOIN Project ON project.id = Task.project_id"
+                        " WHERE project.id = :project_id"
+                        " AND Task.date_modified >= :fromDate"
+                        " AND Task.date_modified <= :toDate"
+                        ).params(project_id=project_id, 
+                                fromDate=fromDate, 
+                                toDate=toDate)
+
+        res = db.engine.execute(stmt)
+        timeWeek = []
+
+        for row in res:
+            timeWeek.append({ 'estimated': row[0], 'actual': row[1] })
+
+        return timeWeek

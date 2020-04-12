@@ -2,45 +2,110 @@
 
 {% block body %}
 
-<h2>Data of {{project.name}} </h2>
+<div class="container">
+    <h2>Project Data Report</h2>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">Project participants</th>
-            <th scope="col">Tasks in total</th>
-            <th scope="col">Tasks completed</th>
-            <th scope="col">Tasks uncompleted</th>
-            <th scope="col">Details</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for d in data|sort(attribute='total,com', reverse=True) %}
-        <tr>
-            <td> {{ d.name }} </td>
-            <td> {{ d.total }} </td>
-            <td> {{ d.com }} </td>
-            <td> {{ d.uncom }} </td>
-            <td>
-                <a href=" {{ url_for('tasks_data_of_participant', project_id=project.id, account_id=d.accountId) }} ">
-                    view
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
+    <table class="table" style="margin-top: 30px;">
+        <tbody>
+            <tr>
+                <th scope="row">Project</th>
+                <td> {{ project.name }} </td>
+            </tr>
+            <tr>
+                <th scope="row">Time report in total</th>
+                <td>
+                    Estimated time: {{timeData[0].estimated}} h
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"></th>
+                <td>
+                    Actual used time: {{timeData[0].actual}} h
+                </td>
+            </tr>
 
-    </tbody>
-</table>
-
-<h2> Time of the project </h2>
-
-{% for t in timeData %}
-<div>
-    Estimated time: {{ t.estimated }} hours
+        </tbody>
+    </table>
 </div>
-<div>
-    Actual time: {{ t.actual }} hours
+
+<div class="container">
+    <h2>Data report </h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Project participants</th>
+                <th scope="col">Tasks in total</th>
+                <th scope="col">Tasks completed</th>
+                <th scope="col">Tasks uncompleted</th>
+                <th scope="col">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in data|sort(attribute='total,com', reverse=True) %}
+            <tr>
+                <td> {{ d.name }} </td>
+                <td> {{ d.total }} </td>
+                <td> {{ d.com }} </td>
+                <td> {{ d.uncom }} </td>
+                <td>
+                    <a href=" {{ url_for('tasks_data_of_participant', project_id=project.id, account_id=d.accountId) }} ">
+                        view
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
 </div>
-{% endfor %}
+
+
+<div class="container">
+    <h3>Time report for a week</h3>
+    <form method="POST" style="margin-top: 20px; margin-bottom: 20px;"
+        action="{{ url_for('project_data', project_id=project.id) }} ">
+
+        <table>
+            <tr>
+                <td>
+                    {{form.fromDate.label}}:
+                </td>
+                <td>
+                    {{ form.fromDate }}
+                </td>
+                <td>
+                    <button class="btn btn-lg btn-primary btn-sm" type="submit">
+                        Choose
+                    </button>
+                </td>
+            </tr>
+        </table>
+
+    </form>
+
+    {% if timeWeek %}
+    <table class="table">
+        <tbody>
+            <tr>
+                <th scope="row">Period</th>
+                <td> {{ fromDate }} ~ {{ toDate }} </td>
+            </tr>
+            <tr>
+                <th scope="row">Estimated time (h)</th>
+                <td> {{ timeWeek[0].estimated }} </td>
+            </tr>
+            <tr>
+                <th scope="row">Actual used time (h)</th>
+                <td>
+                    {{timeWeek[0].actual}}
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+
 
 {% endblock body %}
