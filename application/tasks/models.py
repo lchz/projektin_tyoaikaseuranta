@@ -111,7 +111,7 @@ class Task(Base):
 
     @staticmethod
     def time_of_project(project_id):
-        stmt = text("SELECT SUM('Task.estimatedTime'), SUM('Task.actualTime') FROM Task"
+        stmt = text("SELECT SUM(Task.'estimatedTime'), SUM(Task.'actualTime') FROM Task"
                     " LEFT JOIN Project ON Project.id = Task.project_id"
                     " WHERE Project.id = :project_id"
                     ).params(project_id=project_id)
@@ -127,7 +127,7 @@ class Task(Base):
 
     @staticmethod
     def time_of_person(project_id, account_id):
-        stmt = text("SELECT SUM('Task.estimatedTime'), SUM('Task.actualTime') FROM Task"
+        stmt = text("SELECT SUM(Task.'estimatedTime'), SUM(Task.'actualTime') FROM Task"
                     " LEFT JOIN Account ON Account.id = Task.account_id"
                     " LEFT JOIN Project ON Project.id = Task.project_id"
                     " WHERE Account.id = :account_id"
@@ -147,22 +147,22 @@ class Task(Base):
     def time_of_one_week(project_id, fromDate, toDate, account_id):
 
         if account_id is not None:
-            stmt = text("SELECT SUM('Task.estimatedTime'), SUM('Task.actualTime') FROM Task"
+            stmt = text("SELECT SUM(Task.'estimatedTime'), SUM(Task.'actualTime') FROM Task"
                         " LEFT JOIN Project ON project.id = Task.project_id"
                         " WHERE project.id = :project_id"
-                        " AND Task.date_modified >= :fromDate"
-                        " AND Task.date_modified <= :toDate"
+                        " AND Task.date_modified >= :fromDate::date"
+                        " AND Task.date_modified <= :toDate::date"
                         " AND Task.account_id = :account_id"
                         ).params(project_id=project_id, 
                                 fromDate=fromDate, 
                                 toDate=toDate,
                                 account_id=account_id)
         else:
-            stmt = text("SELECT SUM('Task.estimatedTime'), SUM('Task.actualTime') FROM Task"
+            stmt = text("SELECT SUM(Task.'estimatedTime'), SUM(Task.'actualTime') FROM Task"
                         " LEFT JOIN Project ON project.id = Task.project_id"
                         " WHERE project.id = :project_id"
-                        " AND Task.date_modified >= :fromDate"
-                        " AND Task.date_modified <= :toDate"
+                        " AND Task.date_modified >= :fromDate::date"
+                        " AND Task.date_modified <= :toDate::date"
                         ).params(project_id=project_id, 
                                 fromDate=fromDate, 
                                 toDate=toDate)
