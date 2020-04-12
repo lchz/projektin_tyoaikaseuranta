@@ -147,7 +147,7 @@ class Task(Base):
     def time_of_one_week(project_id, fromDate, toDate, account_id):
 
         if account_id is not None:
-            stmt = text("SELECT SUM(estimatedTime), SUM(actualTime) FROM Task"
+            stmt = text("SELECT SUM(Task.estimatedTime), SUM(Task.actualTime) FROM Task"
                         " LEFT JOIN Project ON project.id = Task.project_id"
                         " WHERE project.id = :project_id"
                         " AND Task.date_modified >= :fromDate"
@@ -158,7 +158,7 @@ class Task(Base):
                                 toDate=toDate,
                                 account_id=account_id)
         else:
-            stmt = text("SELECT SUM(estimatedTime), SUM(actualTime) FROM Task"
+            stmt = text("SELECT SUM(Task.estimatedTime), SUM(Task.actualTime) FROM Task"
                         " LEFT JOIN Project ON project.id = Task.project_id"
                         " WHERE project.id = :project_id"
                         " AND Task.date_modified >= :fromDate"
