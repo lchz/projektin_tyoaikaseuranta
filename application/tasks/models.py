@@ -111,7 +111,7 @@ class Task(Base):
 
     @staticmethod
     def time_of_project(project_id):
-        stmt = text("SELECT SUM(estimatedTime), SUM(actualTime) FROM Task"
+        stmt = text("SELECT SUM(Task.estimatedTime), SUM(Task.actualTime) FROM Task"
                     " LEFT JOIN Project ON Project.id = Task.project_id"
                     " WHERE Project.id = :project_id"
                     ).params(project_id=project_id)
@@ -127,7 +127,7 @@ class Task(Base):
 
     @staticmethod
     def time_of_person(project_id, account_id):
-        stmt = text("SELECT SUM(estimatedTime), SUM(actualTime) FROM Task"
+        stmt = text("SELECT SUM(Task.estimatedTime), SUM(Task.actualTime) FROM Task"
                     " LEFT JOIN Account ON Account.id = Task.account_id"
                     " LEFT JOIN Project ON Project.id = Task.project_id"
                     " WHERE Account.id = :account_id"
