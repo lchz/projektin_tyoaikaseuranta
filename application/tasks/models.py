@@ -150,8 +150,8 @@ class Task(Base):
             stmt = text("SELECT SUM(Task.\"estimatedTime\"), SUM(Task.\"actualTime\") FROM Task"
                         " LEFT JOIN Project ON project.id = Task.project_id"
                         " WHERE project.id = :project_id"
-                        " AND Task.date_modified::date >= :fromDate"
-                        " AND Task.date_modified::date <= :toDate"
+                        " AND Task.date_modified >= :fromDate"
+                        " AND Task.date_modified <= :toDate"
                         " AND Task.account_id = :account_id"
                         ).params(project_id=project_id, 
                                 fromDate=fromDate, 
@@ -161,8 +161,8 @@ class Task(Base):
             stmt = text("SELECT SUM(Task.\"estimatedTime\"), SUM(Task.\"actualTime\") FROM Task"
                         " LEFT JOIN Project ON project.id = Task.project_id"
                         " WHERE project.id = :project_id"
-                        " AND Task.date_modified::date >= :fromDate"
-                        " AND Task.date_modified::date <= :toDate"
+                        " AND Task.date_modified >= :fromDate"
+                        " AND Task.date_modified <= :toDate"
                         ).params(project_id=project_id, 
                                 fromDate=fromDate, 
                                 toDate=toDate)
