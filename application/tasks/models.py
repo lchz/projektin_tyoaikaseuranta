@@ -67,33 +67,33 @@ class Task(Base):
     @staticmethod
     def find_tasks_of_participant(project_id, account_id):
 
-        stmt1 = text("SELECT COUNT(Task.id) from Task"
-                     " LEFT JOIN Project ON Project.id = Task.project_id"
-                     " LEFT JOIN Account ON Account.id = Task.account_id"
-                     " WHERE Project.id = :project_id"
-                     " AND Account.id = :account_id"
-                     " AND Task.status = False"
-                     ).params(project_id=project_id, account_id=account_id)
+        stmtUndoneTasks = text("SELECT COUNT(Task.id) from Task"
+                                " LEFT JOIN Project ON Project.id = Task.project_id"
+                                " LEFT JOIN Account ON Account.id = Task.account_id"
+                                " WHERE Project.id = :project_id"
+                                " AND Account.id = :account_id"
+                                " AND Task.status = False"
+                                ).params(project_id=project_id, account_id=account_id)
 
-        stmt2 = text("SELECT COUNT(Task.id) from Task"
-                     " LEFT JOIN Project ON Project.id = Task.project_id"
-                     " LEFT JOIN Account ON Account.id = Task.account_id"
-                     " WHERE Project.id = :project_id"
-                     " AND Account.id = :account_id"
-                     " AND Task.status = True"
-                     ).params(project_id=project_id, account_id=account_id)
+        stmtDoneTasks = text("SELECT COUNT(Task.id) from Task"
+                            " LEFT JOIN Project ON Project.id = Task.project_id"
+                            " LEFT JOIN Account ON Account.id = Task.account_id"
+                            " WHERE Project.id = :project_id"
+                            " AND Account.id = :account_id"
+                            " AND Task.status = True"
+                            ).params(project_id=project_id, account_id=account_id)
 
-        stmt3 = text("SELECT COUNT(Task.id) from Task"
-                     " LEFT JOIN Project ON Project.id = Task.project_id"
-                     " LEFT JOIN Account ON Account.id = Task.account_id"
-                     " WHERE Project.id = :project_id"
-                     " AND Account.id = :account_id"
-                     ).params(project_id=project_id, account_id=account_id)
+        stmtTotalTasks = text("SELECT COUNT(Task.id) from Task"
+                            " LEFT JOIN Project ON Project.id = Task.project_id"
+                            " LEFT JOIN Account ON Account.id = Task.account_id"
+                            " WHERE Project.id = :project_id"
+                            " AND Account.id = :account_id"
+                            ).params(project_id=project_id, account_id=account_id)
 
 
-        res1 = db.engine.execute(stmt1)
-        res2 = db.engine.execute(stmt2)
-        res3 = db.engine.execute(stmt3)
+        res1 = db.engine.execute(stmtUndoneTasks)
+        res2 = db.engine.execute(ststmtDoneTasksmt2)
+        res3 = db.engine.execute(stmtTotalTasks)
 
 
         taskData = []

@@ -7,7 +7,6 @@ from application.auth.models import User
 from application.tasks.models import Task
 from application.data.forms import DataForm
 
-from datetime import datetime
 from datetime import timedelta
 
 
@@ -107,6 +106,7 @@ def my_project_data(project_id):
 
     return render_template('data/myData.html',
                             project=project,
+                            account=current_user,
                             form=DataForm(),
                             myTimeData=myTimeData,
                             fromDate=fromDate,
