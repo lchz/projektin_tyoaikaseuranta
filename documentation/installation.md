@@ -1,12 +1,12 @@
 # Asennusohje
 
-Sovelluksen asentaessa tarvitaan Git ja Python3. Varmistathan, että ne ovat koneellasi asennettuina ennen sovelluksen lataamista.
+Paikallisesti sovelluksen asentaessa tarvitaan Git ja Python3. Varmistathan, että ne ovat koneellanne asennettuina ennen sovelluksen lataamista.
 
 1. Kloonaa projekti tai lataa se ZIP-pakattuna GitHub:sta
 
     `$ git clone <projekti_git>`
 
-2. Luo Pythonin virtuaaliympäristö sovelluksen juurikansiossa ja aktioi se
+2. Luo Pythonin virtuaaliympäristö sovelluksen juurikansiossa ja aktivoi se
 
     `$ python3 -m venv venv`
     `$ source venv/bin/activate`
@@ -19,7 +19,7 @@ Sovelluksen asentaessa tarvitaan Git ja Python3. Varmistathan, että ne ovat kon
 
     `$ python3 run.py`
 
-5. Jos kaikki menee oikein, sovellus on käynnissä osoitteessa http://127.0.0.1:5000
+5. Jos kaikki menee oikein, sovellus on nyt käynnissä osoitteessa http://127.0.0.1:5000
 
 6. Sovelluksen päättymiseksi painaa `ctrl + c`
 

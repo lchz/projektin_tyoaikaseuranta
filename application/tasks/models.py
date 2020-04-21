@@ -32,7 +32,6 @@ class Task(Base):
                     " LEFT JOIN Project ON Project.id = Task.project_id"
                     " WHERE Task.account_id = :current_id"
                     " AND Task.project_id = :project_id"
-                    " GROUP BY Task.id"
                     ).params(current_id=current_id, project_id=project_id)
 
         res = db.engine.execute(stmt)

@@ -8,8 +8,7 @@ class Project(Base):
     description = db.Column(db.String(1000), nullable=False)
 
     # project master
-    account_id = db.Column(db.Integer, db.ForeignKey(
-        'account.id'), nullable=False)
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
 
     tasks = db.relationship('Task', backref='project', lazy=True)
 
