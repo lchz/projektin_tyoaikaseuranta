@@ -93,8 +93,8 @@ As a basic user, I can find the tasks registered by myself.
 ```sql
 SELECT Task.name, Task.status, Task.date_created, Task.date, Task.id FROM Task
     LEFT JOIN Project ON Project.id = Task.project_id
-    WHERE Task.account_id = :current_id
-    AND Task.project_id = :project_id
+    WHERE Task.account_id = <current_id>
+    AND Task.project_id = <project_id>
 ```
 
 
@@ -152,8 +152,8 @@ DELETE FROM registration
     AND account_id=<account_id>
 
 DELETE FROM Task 
-    WHERE Task.project_id = :project_id 
-    AND Task.account_id = :account_id
+    WHERE Task.project_id = <project_id>
+    AND Task.account_id = <account_id>
 ```
 
 
