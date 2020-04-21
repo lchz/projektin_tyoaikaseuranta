@@ -119,5 +119,5 @@ def my_project_data(project_id):
 def remove_participant_from_project(project_id, account_id):
 
     Task.remove_person_from_project(project_id, account_id)
-    
+
     return redirect(url_for('project_data', project_id=project_id))
