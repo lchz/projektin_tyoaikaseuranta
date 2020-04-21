@@ -47,7 +47,10 @@ def project_data(project_id):
         fromDate = form.fromDate.data
         toDate = fromDate + timedelta(days=7)
 
-        timeWeek = Task.time_of_one_week(project_id, fromDate, toDate, None)
+        searchFrom = fromDate - timedelta(days=1)
+        searchTo = toDate + timedelta(days=1)
+
+        timeWeek = Task.time_of_one_week(project_id, searchFrom, searchTo, None)
 
     return render_template('/data/dataProject.html',
                             form=DataForm(),
@@ -97,7 +100,10 @@ def my_project_data(project_id):
         fromDate = form.fromDate.data
         toDate = fromDate + timedelta(days=7)
 
-        myTimeWeek = Task.time_of_one_week(project_id, fromDate, toDate, current_user.id)
+        searchFrom = fromDate - timedelta(days=1)
+        searchTo = toDate + timedelta(days=1)
+
+        myTimeWeek = Task.time_of_one_week(project_id, searchFrom, searchTo, current_user.id)
 
     return render_template('data/myData.html',
                             project=project,
