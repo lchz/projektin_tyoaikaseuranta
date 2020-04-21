@@ -6,7 +6,6 @@ from application.auth.models import User
 from application.projects.models import Project
 from application.tasks.forms import TaskForm
 
-
 import datetime
 
 
@@ -109,7 +108,7 @@ def tasks_set_actualTime(project_id, task_id):
         task.date = datetime.datetime.now().date()
         db.session().commit()
     except:
-        db.session.rollback()
+        db.session().rollback()
     
     return render_template('tasks/task.html',
                         task=task,

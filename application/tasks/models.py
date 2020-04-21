@@ -92,7 +92,7 @@ class Task(Base):
 
 
         res1 = db.engine.execute(stmtUndoneTasks)
-        res2 = db.engine.execute(ststmtDoneTasksmt2)
+        res2 = db.engine.execute(stmtDoneTasks)
         res3 = db.engine.execute(stmtTotalTasks)
 
 
@@ -175,3 +175,17 @@ class Task(Base):
 
         return timeWeek
 
+    @staticmethod
+    def remove_person_from_project(project_id, account_id):
+        stmtRemovePerson = text("DELETE FROM registration"
+                                " WHERE project_id = :project_id"
+                                " AND account_id = :account_id"
+                                ).params(project_id=project_id, account_id=account_id)
+
+        stmtDeleteTasks = text("DELETE FROM Task"
+                                " WHERE Task.project_id = :project_id"
+                                " AND Task.account_id = :account_id"
+                                ).params(project_id=project_id, account_id=account_id)
+
+        db.engine.execute(stmtRemovePerson)
+        db.engine.execute(stmtDeleteTasks)

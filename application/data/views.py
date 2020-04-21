@@ -1,5 +1,5 @@
 from application import app, db, login_required
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, abort
 from flask_login import current_user
 
 from application.projects.models import Project
@@ -15,19 +15,19 @@ from datetime import timedelta
 def project_data(project_id):
 
     project = Project.query.get(project_id)
-    data = Task.find_project_participants(project_id)
+    participants = Task.find_project_participants(project_id)
     timeData = Task.time_of_project(project_id)
 
-    for d in data:
-        taskData = Task.find_tasks_of_participant(project.id, d.get('accountId'))
+    for p in participants:
+        taskData = Task.find_tasks_of_participant(project.id, p.get('accountId'))
 
         uncom = taskData[0].get('uncom')
         com = taskData[1].get('com')
         total = taskData[2].get('total')
 
-        d['total'] = total
-        d['uncom'] = uncom
-        d['com'] = com
+        p['total'] = total
+        p['uncom'] = uncom
+        p['com'] = com
 
     timeWeek = None
     fromDate = None
@@ -40,7 +40,7 @@ def project_data(project_id):
             return render_template('/data/dataProject.html',
                         form=DataForm(),
                         project=project,
-                        data=data,
+                        data=participants,
                         timeData=timeData)
 
         fromDate = form.fromDate.data
@@ -54,7 +54,7 @@ def project_data(project_id):
     return render_template('/data/dataProject.html',
                             form=DataForm(),
                             project=project,
-                            data=data,
+                            data=participants,
                             timeData=timeData,
                             timeWeek=timeWeek,
                             fromDate=fromDate,
@@ -112,3 +112,12 @@ def my_project_data(project_id):
                             fromDate=fromDate,
                             toDate=toDate,
                             myTimeWeek=myTimeWeek)
+
+
+@app.route('/projects/<project_id>/data/remove/<account_id>', methods=['POST'])
+@login_required(role="MASTER")
+def remove_participant_from_project(project_id, account_id):
+
+    Task.remove_person_from_project(project_id, account_id)
+    
+    return redirect(url_for('project_data', project_id=project_id))

@@ -22,7 +22,9 @@ class User(Base):
     registrations = db.relationship('Project', 
                                     secondary=registration_table, 
                                     backref=db.backref('participants', lazy=True), 
-                                    lazy=True )
+                                    lazy=True,
+                                    single_parent=True,
+                                    cascade="all, delete, delete-orphan" )
 
     roles = db.relationship('Role', 
                             secondary=user_role_table, 
