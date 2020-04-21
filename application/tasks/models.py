@@ -174,3 +174,4 @@ class Task(Base):
             timeWeek.append({ 'estimated': row[0], 'actual': row[1] })
 
         return timeWeek
+

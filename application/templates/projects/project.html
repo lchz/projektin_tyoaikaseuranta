@@ -39,6 +39,17 @@
                 </a>
             </td>
         </tr>
+        
+        {% else %}
+        <tr>
+            <th scope="row">Data</th>
+            <td>
+                <a href="{{ url_for('my_project_data', project_id=project.id) }}">
+                    details
+                </a>
+            </td>
+        </tr>
+        
         {% endif %}
 
     </tbody>

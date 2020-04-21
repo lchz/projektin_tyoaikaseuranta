@@ -1,5 +1,5 @@
 from application import app, db, login_required
-from flask import render_template, request, redirect, url_for, abort
+from flask import render_template, request, redirect, url_for
 from flask_login import current_user
 
 from application.projects.models import Project
@@ -26,7 +26,6 @@ def project_data(project_id):
         com = taskData[1].get('com')
         total = taskData[2].get('total')
 
-        # d['total'] = uncom + com
         d['total'] = total
         d['uncom'] = uncom
         d['com'] = com
@@ -74,4 +73,36 @@ def tasks_data_of_participant(project_id, account_id):
                             project=project, 
                             tasks=tasks,
                             timeData=timeData)
+
+@app.route('/projects/<project_id>/myData', methods=['GET', 'POST'])
+@login_required(role="BASIC")
+def my_project_data(project_id):
     
+    project = Project.query.get(project_id)
+    myTimeData = Task.time_of_person(project_id, current_user.id)
+
+    myTimeWeek = None
+    fromDate = None
+    toDate = None
+
+    if request.method == 'POST':
+        form = DataForm(request.form)
+
+        if not form.validate():
+            return render_template('/data/myData.html',
+                        form=DataForm(),
+                        project=project,
+                        myTimeData=myTimeData)
+
+        fromDate = form.fromDate.data
+        toDate = fromDate + timedelta(days=7)
+
+        myTimeWeek = Task.time_of_one_week(project_id, fromDate, toDate, current_user.id)
+
+    return render_template('data/myData.html',
+                            project=project,
+                            form=DataForm(),
+                            myTimeData=myTimeData,
+                            fromDate=fromDate,
+                            toDate=toDate,
+                            myTimeWeek=myTimeWeek)
