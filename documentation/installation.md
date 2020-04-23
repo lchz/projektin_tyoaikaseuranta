@@ -30,27 +30,33 @@ Paikallisesti sovelluksen asentaessa tarvitaan Git ja Python3. Varmistathan, ett
 7. Sovelluksen päättymiseksi painaa `ctrl + c`
 
 ## Heroku
-Sovellus pyörii valmiina [Herokussa]().
+Sovellus pyörii valmiina [Herokussa](https://tsoha-py-tyoaikaseuranta.herokuapp.com/) käyttäen tunnusillä:
 
-Heroku-apin asettaessa tarvitaan:
+|Rooli  | Käyttäjätunnus | Salasana  |
+|:-----:|:--------------:|:---------:|
+|BASIC  |    test        | secret    |
+|BASIC  |    test2       | secret2   |
+|MASTER |    master      | admin     |
 
-1. On käytössä Herokun CLI-työkalun ja tunnukset
+#### Heroku-apin asettaessa tarvitaan:
+
+1. Herokun CLI-työkalu ja tunnukset
 
     `heroku create <haluttu nimi>`
 
-2. Liitetään git-repositioon Heroku
+2. Git-repositio Herokuun
 
     `git remote add heroku <osoite herokussa>`
     
-3. Asetetaan Herokun HEROKU-ympäristömuuttujan arvoksi 1
+3. Herokun HEROKU-ympäristömuuttujan arvoksi 1
 
     `heroku config:set HEROKU=1`
 
-4. Luodaan sovellukselle PostgreSQL-tietokanta Herokuun
+4. PostgreSQL-tietokanta Herokuun
 
     `heroku addons:add heroku-postgresql:hobby-dev`
 
-5. Pushataan Herokuun
+5. Herokuun pushaaminen
 
     `git push heroku master`
     
