@@ -30,7 +30,7 @@ Paikallisesti sovelluksen asentaessa tarvitaan Git ja Python3. Varmistathan, ett
 7. Sovelluksen päättymiseksi painaa `ctrl + c`
 
 ## Heroku
-Sovellus pyörii valmiina [Herokussa](https://tsoha-py-tyoaikaseuranta.herokuapp.com/) käyttäen tunnusillä:
+Sovellus pyörii valmiina [Herokussa](https://tsoha-py-tyoaikaseuranta.herokuapp.com/) käyttäen tunnusilla:
 
 |Rooli  | Käyttäjätunnus | Salasana  |
 |:-----:|:--------------:|:---------:|
