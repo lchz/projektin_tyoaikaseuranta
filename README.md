@@ -18,6 +18,9 @@ Perusideana on, että käyttäjä voi kirjautuneena rekisteröidä itsensä olem
 
 Projektipäälikkönä voi luoda uusia projekteja ja tarkistaa projektiin käytettyä aikaa kokonaisuudessan sekä kukin osallistujan yhteenvetoraportteja. Projektipäälikkö voi myös muokata kukin projektin osallistujia, eli lisätä projektiin uuden osallistujan tai jostain syystä poistaa osallistujan projektista.
 
+## Rajoitteet ja mahdolliset parannusehdot
+Projektin alussa suunniteltut toiminnallisuudet on toteutettu tavoitteen mukaisesti. Jatkokehityksessä voitaisiin lisätä hakutoiminnallisuus, jossa ainakin projektipäälikkö voisi hakea osallistujan perusteella raportteja. Lisäksi listaus, jossa on kaikkien osallistujen yhteenvetoraportteja, voitaisiin järjestää käyttäjän tavoitteen mukaisesti, esim. käytettyjen ajan perusteella tai tehtävien määrän perusteella.
+
 ## Tunnukset
 
 |Rooli  | Käyttäjätunnus | Salasana  |
