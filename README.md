@@ -1,4 +1,4 @@
-# Projektin tyäaikaseuranta
+# Projektin tyäaikaseuranta [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 [Heroku](https://tsoha-py-tyoaikaseuranta.herokuapp.com/)
 
@@ -10,8 +10,7 @@
 
 [User story](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/documentation/User_stories.md)
 
-[License](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/LICENSE)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[LISENCE](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/LICENSE)
 
 ## Kuvaus
 
