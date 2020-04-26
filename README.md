@@ -10,7 +10,7 @@
 
 [User story](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/documentation/User_stories.md)
 
-[LISENCE](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/LICENSE)
+[LICENSE](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/LICENSE)
 
 ## Kuvaus
 

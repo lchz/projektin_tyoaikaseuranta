@@ -15,7 +15,7 @@
 
         {% for error in form.name.errors %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            Name {{ error[5:] }}
+            {{error}}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -24,7 +24,7 @@
 
         {% for error in form.username.errors %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            Username {{ error[5:] }}
+            {{error}}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -33,7 +33,7 @@
 
         {% for error in form.password.errors %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            Password {{ error[5:] }}
+            {{error}}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
