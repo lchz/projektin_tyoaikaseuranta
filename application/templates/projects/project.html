@@ -4,16 +4,45 @@
 
 <h2>{{ project.name }} </h2>
 
+{% if error %}
+{{error}}
+{% endif %}
+
 <table class="table table-striped">
 
     <tbody>
         <tr>
+            <th scope="row">Project name</th>
+            <td> {{ project.name }} </td>
+            {% if authorized %}
+            <td>
+                <form method="POST" action=" {{ url_for('project_modifiy_name', project_id=project.id) }} ">
+                    <input type="text" name="set_project_name" placeholder="Reset name, 5-144 characters" />
+                    <input class="btn btn-success btn-sm" type="submit" value="Set" />
+                </form>
+            </td>
+            {% else %}
+            <td></td>
+            {% endif %}
+        </tr>
+        <tr>
             <th scope="row">Project master</th>
             <td> {{ creator.name }} </td>
+            <td></td>
         </tr>
         <tr>
             <th scope="row">Description</th>
             <td>{{ project.description }}</td>
+            {% if authorized %}
+            <td>
+                <form method="POST" action=" {{ url_for('project_modifiy_description', project_id=project.id) }} ">
+                    <input type="text" name="set_project_description" placeholder="Reset description, 5-1000 characters" />
+                    <input class="btn btn-success btn-sm" type="submit" value="Set" />
+                </form>
+            </td>
+            {% else %}
+            <td></td>
+            {% endif %}
         </tr>
         <tr>
             <th scope="row">Tasks</th>
@@ -28,6 +57,7 @@
                 </span>
                 {% endif %}
             </td>
+            <td></td>
         </tr>
 
         {% if role == 'MASTER' %}
@@ -38,8 +68,9 @@
                     details
                 </a>
             </td>
+            <td></td>
         </tr>
-        
+
         {% else %}
         <tr>
             <th scope="row">Data</th>
@@ -48,8 +79,9 @@
                     details
                 </a>
             </td>
+            <td></td>
         </tr>
-        
+
         {% endif %}
 
     </tbody>
