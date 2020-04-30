@@ -1,7 +1,17 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<div>
-    Hei tsoha!
+<div style="background-color: bisque;">
+    <div class="container">
+        This is an app for tracing your working time during a project.
+        <br>
+        <br>
+        Please <a href="{{ url_for('auth_login') }}">sign in</a> to use this app.
+        <br>
+        <br>
+        New user? You can create a basic account <a href=" {{ url_for('auth_signup_basic') }} ">here</a>
+        or a master account <a href=" {{ url_for('auth_signup_master') }} ">here</a>.
+    </div>
 </div>
+
 {% endblock body %}
