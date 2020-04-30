@@ -9,8 +9,8 @@ class Task(Base):
 
     name = db.Column(db.String(144), nullable=False)
     content = db.Column(db.String(350), nullable=False)
-    estimatedTime = db.Column(db.Numeric(10, 1), nullable=False)
-    actualTime = db.Column(db.Numeric(10, 1), nullable=False)
+    estimatedTime = db.Column(db.Numeric(10, 2), nullable=False)
+    actualTime = db.Column(db.Numeric(10, 2), nullable=False)
     date = db.Column(db.Date, nullable=False)
     status = db.Column(db.Boolean, nullable=False)
 

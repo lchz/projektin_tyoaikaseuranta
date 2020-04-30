@@ -26,11 +26,13 @@
         <form method="POST" action="{{ url_for('projects_create')}} ">
             <h1 class="h3 mb-3 font-weight-normal">Create a project</h1>
             <div>
-                {{form.name.label}} {{ form.name(class="form-control") }}
+                {{form.name.label}} 
+                {{ form.name(class="form-control", placeholder="5-144 characters") }}
             </div>
 
             <div>
-                {{form.description.label(style="margin-top: 20px;")}} {{ form.description(class="form-control") }}
+                {{form.description.label(style="margin-top: 20px;")}} 
+                {{ form.description(class="form-control", placeholder="5-1000 characters") }}
             </div>
 
             <button class="btn btn-lg btn-primary btn-block" style="margin-top: 20px;" type="submit">

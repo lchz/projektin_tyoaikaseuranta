@@ -35,15 +35,18 @@
             <h1 class="h3 mb-3 font-weight-normal">Create a task</h1>
             
             <div>
-                {{form.name.label}} {{ form.name(class="form-control") }}
+                {{form.name.label}} 
+                {{ form.name(class="form-control", placeholder="5-144 characters") }}
             </div>
 
             <div>
-                {{form.content.label(style="margin-top: 20px;")}} {{ form.content(class="form-control") }}
+                {{form.content.label(style="margin-top: 20px;")}} 
+                {{ form.content(class="form-control", placeholder="5-1000 characters") }}
             </div>
 
             <div>
-                {{form.estimatedTime.label(style="margin-top: 20px;") }} (in hours) {{ form.estimatedTime(class="form-control") }}
+                {{form.estimatedTime.label(style="margin-top: 20px;") }} (in hours) 
+                {{ form.estimatedTime(class="form-control", placeholder="0.00-100.00") }}
             </div>
 
             <button class="btn btn-lg btn-primary btn-block" style="margin-top: 15px;" type="submit">
