@@ -44,7 +44,7 @@ def auth_signup_basic():
 
     user = User(form.name.data, form.username.data, form.password.data)
     basic_role = Role.query.filter_by(name='BASIC').first()
-    user.roles = [basic_role,]
+    user.roles.append(basic_role)
 
     try:
         db.session().add(user)
@@ -71,7 +71,7 @@ def auth_signup_master():
 
     user = User(form.name.data, form.username.data, form.password.data)
     master_role = Role.query.filter_by(name='MASTER').first()
-    user.roles = [master_role,]
+    user.roles.append(master_role)
 
     try:
         db.session().add(user)
