@@ -79,8 +79,24 @@ def tasks_data_of_participant(project_id, account_id):
 @app.route('/projects/<project_id>/myData', methods=['GET', 'POST'])
 @login_required(role="BASIC")
 def my_project_data(project_id):
-    
+
     project = Project.query.get(project_id)
+    canSee = False
+
+    for participant in project.participants:
+        if participant.id == current_user.id:
+            canSee = True
+            break
+
+    if not canSee:
+        return render_template('projects/project.html', 
+                                project=project,
+                                creator=User.query.get(project.account_id),
+                                canRegister=True,
+                                notRegisteredError='Please register first.',
+                                role='BASIC'
+                              )
+    
     myTimeData = Task.time_of_person(project_id, current_user.id)
 
     myTimeWeek = None

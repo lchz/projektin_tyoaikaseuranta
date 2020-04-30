@@ -2,9 +2,18 @@
 
 {% block body %}
 
-<h2>{{ project.name }} </h2>
+<h2 style="margin-bottom: 10px;">{{ project.name }} </h2>
 
-<table class="table table-striped">
+{% if notRegisteredError %}
+<span class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{ notRegisteredError }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</span>
+{% endif %}
+
+<table class="table table-striped" style="margin-top: 30px;">
     <tbody>
         <tr>
             <th scope="row">Project name</th>
@@ -44,14 +53,14 @@
             <th scope="row">Tasks</th>
             <td>
                 <a href="{{ url_for('tasks_index', project_id=project.id) }} ">view</a>
-                {% if notRegisteredError %}
+                <!-- {% if notRegisteredError %}
                 <span class="alert alert-warning alert-dismissible fade show" role="alert">
                     {{ notRegisteredError }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </span>
-                {% endif %}
+                {% endif %} -->
             </td>
             <td></td>
         </tr>
