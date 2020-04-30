@@ -42,7 +42,7 @@
                 <td>
                     <form method="POST"
                         action="{{ url_for('tasks_set_actualTime', task_id=task.id, project_id=projectId) }} ">
-                        <input type="number" name="set_actualTime" step="0.1" placeholder="Only when task is completed" />
+                        <input type="number" name="set_actualTime" step="0.01" placeholder="Only when task is completed" />
                         <input class="btn btn-success btn-sm" type="submit" value="Set" />
                     </form>
                 </td>
