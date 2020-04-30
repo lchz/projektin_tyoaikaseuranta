@@ -17,7 +17,7 @@ As a user, I can list all tasks so that I can trace my working hours.
 SELECT * FROM Task;
 ```
 
-As a user, I can see details of a project so that I can ???.
+As a user, I can see details of a project so that I can participate in it.
 ```sql
 SELECT <project> FROM Project WHERE project.id=<id>;
 ```
