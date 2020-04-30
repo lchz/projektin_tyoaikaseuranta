@@ -1,6 +1,6 @@
 # User stories
 
-Tässä on listattuna käyttötapauksia user storyn muotona sekä lopuksi CREATE TABLE-lauseet tietokannoista. Käyttötapausten listassa `basic user` viittaa peruskäyttäjäryhmään ja `master` projektipäälikköryhmään. `User` viittaa molempiin käyttäjäryhmiin.
+Tässä on listattuna käyttötapauksia user storyn muotona sekä lopuksi CREATE TABLE-lauseet tietokannoista. Käyttötapausten listassa `basic user` viittaa peruskäyttäjäryhmään ja `master` projektipäällikköryhmään. `User` viittaa molempiin käyttäjäryhmiin.
 
 ### 1.Tiedon selaaminen
 
