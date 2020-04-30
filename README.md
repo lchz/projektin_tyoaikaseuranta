@@ -8,7 +8,7 @@
 
 [Tietokantakaavio](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/documentation/tietokantakaavio.png)
 
-[User story](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/documentation/User_stories.md)
+[User story](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/documentation/user_stories.md)
 
 [LICENSE](https://github.com/lchz/projektin-tyoaikaseuranta/blob/master/LICENSE)
 
