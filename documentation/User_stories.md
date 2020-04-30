@@ -1,6 +1,8 @@
 # User stories
 
-## 1.Tiedon selaaminen
+Tässä on listattuna käyttötapauksia user storyn muotona sekä lopuksi CREATE TABLE-lauseet tietokannoista. Käyttötapausten listassa `basic user` viittaa peruskäyttäjäryhmään ja `master` projektipäälikköryhmään. `User` viittaa molempiin käyttäjäryhmiin.
+
+### 1.Tiedon selaaminen
 
 As a user, I can log in to the system so that I can se project details.
 ```sql
@@ -19,14 +21,50 @@ SELECT * FROM Task;
 
 As a user, I can see details of a project so that I can participate in it.
 ```sql
-SELECT <project> FROM Project WHERE project.id=<id>;
+SELECT * FROM Project WHERE project.id=<Integer>;
 ```
 
-As a master, I can see registered participants in the project.
+As a basic user, I can search for the working time report for one week so that I can know how much time in total I have been used in the week.
+```sql
+SELECT SUM(Task.\"estimatedTime\"), SUM(Task.\"actualTime\") FROM Task
+    LEFT JOIN Project ON project.id = Task.project_id
+    WHERE project.id = <Integer>
+    AND Task.account_id = <Integer>
+    AND Task.date_modified >= <Date>
+    AND Task.date_modified <= <Date>;
+```
+
+As a basic user, I can find the tasks registered by myself.
+```sql
+SELECT Task.name, Task.status, Task.date_created, Task.date, Task.id FROM Task
+    LEFT JOIN Project ON Project.id = Task.project_id
+    WHERE Task.account_id = <Integer>
+    AND Task.project_id = <Integer>;
+```
+
+As a basic user, I can see how many hours in total I have used in the project.
+```sql
+SELECT SUM(Task.\"estimatedTime\"), SUM(Task.\"actualTime\") FROM Task
+    LEFT JOIN Account ON Account.id = Task.account_id
+    LEFT JOIN Project ON Project.id = Task.project_id
+    WHERE Account.id = <Integer>
+    AND Project.id = <Integer>;
+```
+
+As a master, I can search for the working time report for one week so that I can know how much time in total has been used in the week.
+```sql
+SELECT SUM(Task.\"estimatedTime\"), SUM(Task.\"actualTime\") FROM Task
+    LEFT JOIN Project ON project.id = Task.project_id
+    WHERE project.id = <Integer>
+    AND Task.date_modified >= <Date>
+    AND Task.date_modified <= <Date>;
+```
+
+As a master, I can see registered participants in a project.
 ```sql
 SELECT Account.id, Account.name FROM Registration
     LEFT JOIN Account ON Registration.account_id = Account.id
-    WHERE Registration.project_id = :project_id;
+    WHERE Registration.project_id = <Integer>;
 ```
 
 As a master, I can see how many tasks in total, how many completed tasks and how many uncompleted tasks have been registered per participant.
@@ -34,67 +72,38 @@ As a master, I can see how many tasks in total, how many completed tasks and how
 SELECT COUNT(Task.id) from Task
     LEFT JOIN Project ON Project.id = Task.project_id
     LEFT JOIN Account ON Account.id = Task.account_id
-    WHERE Project.id = <project_id>
-    AND Account.id = <account_id>;
+    WHERE Project.id = <Integer>
+    AND Account.id = <Integer>;
 
 SELECT COUNT(Task.id) from Task
     LEFT JOIN Project ON Project.id = Task.project_id
     LEFT JOIN Account ON Account.id = Task.account_id
-    WHERE Project.id = <project_id>
-    AND Account.id = <account_id>
+    WHERE Project.id = <Integer>
+    AND Account.id = <Integer>
     AND Task.status = True;
 
 SELECT COUNT(Task.id) from Task
     LEFT JOIN Project ON Project.id = Task.project_id
     LEFT JOIN Account ON Account.id = Task.account_id
-    WHERE Project.id = <project_id>
-    AND Account.id = <account_id>
+    WHERE Project.id = <Integer>
+    AND Account.id = <Integer>
     AND Task.status = False;
+```
+
+As a master, I can see how many hours one participant has used in the project.
+```sql
+SELECT SUM(Task.\"estimatedTime\"), SUM(Task.\"actualTime\") FROM Task
+    LEFT JOIN Account ON Account.id = Task.account_id
+    LEFT JOIN Project ON Project.id = Task.project_id
+    WHERE Account.id = <Integer>
+    AND Project.id = <Integer>;
 ```
 
 As a master, I can see how many hours in total have been used in the project.
 ```sql
 SELECT SUM(Task.\"estimatedTime\"), SUM(Task.\"actualTime\") FROM Task
     LEFT JOIN Project ON Project.id = Task.project_id
-    WHERE Project.id = <project_id>;
-```
-
-As a master, I can see how many hours in total have been used in the project per participant.
-
-As a basic user, I can see how many hours in total I have been used in the project.
-```sql
-SELECT SUM(Task.\"estimatedTime\"), SUM(Task.\"actualTime\") FROM Task
-    LEFT JOIN Account ON Account.id = Task.account_id
-    LEFT JOIN Project ON Project.id = Task.project_id
-    WHERE Account.id = <account_id>
-    AND Project.id = <project_id>;
-```
-
-As a master, I can search for the working time report for one week so that I can know how much time in total has been used in the week.
-```sql
-SELECT SUM(Task.\"estimatedTime\"), SUM(Task.\"actualTime\") FROM Task
-    LEFT JOIN Project ON project.id = Task.project_id
-    WHERE project.id = <project_id>
-    AND Task.date_modified >= <fromDate>
-    AND Task.date_modified <= <toDate>;
-```
-
-As a basic user, I can search for the working time report for one week so that I can know how much time in total I have been used in the week.
-```sql
-SELECT SUM(Task.\"estimatedTime\"), SUM(Task.\"actualTime\") FROM Task
-    LEFT JOIN Project ON project.id = Task.project_id
-    WHERE project.id = <project_id>
-    AND Task.account_id = <account_id>
-    AND Task.date_modified >= <fromDate>
-    AND Task.date_modified <= <toDate>;
-```
-
-As a basic user, I can find the tasks registered by myself.
-```sql
-SELECT Task.name, Task.status, Task.date_created, Task.date, Task.id FROM Task
-    LEFT JOIN Project ON Project.id = Task.project_id
-    WHERE Task.account_id = <current_id>
-    AND Task.project_id = <project_id>;
+    WHERE Project.id = <Integer>;
 ```
 
 
@@ -104,24 +113,22 @@ SELECT Task.name, Task.status, Task.date_created, Task.date, Task.id FROM Task
 As a user, I can create a new account so that I can use more functionalities
 ```sql
 INSERT INTO account (date_created, date_modified, name, username, password VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, <String>, <String>, <String>);
-```
-
-As a master, I can create a project so that others can register for it.
-
-```sql
-INSERT INTO project (date_created, date_modified, name, description) VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, <String>, <String>);
-```
-
-As a basic user, I can create a task to record my working hours.
-
-```sql
-INSERT INTO task (date_created, date_modified, name, content, estimatedTime, date, status) VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, <String>, <String>, <Numeric>, <Date>, <Boolean>);
+INSERT INTO user_role (role_id, account_id) VALUES (<Integer>, <Integer>);
 ```
 
 As a basic user, I can register for a project so that I can start to trace my working hours on the project.
-
 ```sql
-INSERT INTO registration_table (project_id, account_id) VALUES (<Integer>, <Integer>);
+INSERT INTO registration (project_id, account_id) VALUES (<Integer>, <Integer>);
+```
+
+As a basic user, I can create a task to record my working hours.
+```sql
+INSERT INTO task (date_created, date_modified, name, content, estimatedTime, date, status, account_id, project_id) VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, <String>, <String>, <Numeric>, <Date>, <Boolean>, <Integer>, <Integer>);
+```
+
+As a master, I can create a project so that others can register for it.
+```sql
+INSERT INTO project (date_created, date_modified, name, description, account_id) VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, <String>, <String>, <Integer>);
 ```
 
 
@@ -130,47 +137,44 @@ INSERT INTO registration_table (project_id, account_id) VALUES (<Integer>, <Inte
 
 As a basic user, I can set my actual hours spent on the task when the task is completed so that the system will record my working time.
 ```sql
-UPDATE task SET actualTime=<Numeric> WHERE task.id=<task_id>;
-UPDATE task SET status=True WHERE task.id=<task_id>;
+UPDATE task SET actualTime=<Numeric> WHERE task.id=<Integer>;
+UPDATE task SET status=True WHERE task.id=<Integer>;
 ```
 
 As a master, I can change the name of a project created by myself.
 ```sql
-UPDATE project SET name=<String> WHERE project.id=<project_id>;
+UPDATE project SET name=<String> WHERE project.id=<Integer>;
 ```
 
 As a master, I can change the description of a project created by myself.
 ```sql
-UPDATE project SET description=<String> WHERE project.id=<project_id>;
+UPDATE project SET description=<String> WHERE project.id=<Integer>;
 ```
 
 
 ## 4. Tiedon poistaminen
 
 As a basic user, I can delete a task created by myself.
-
 ```sql
-DELETE FROM task WHERE task.id=<task_id>;
+DELETE FROM task WHERE task.id=<Integer>;
 ```
 
 As a master, I can delete a project created by myself.
 ```sql
-DELETE FROM Task WHERE Task.project_id = <project_id>;
-
-DELETE FROM registration WHERE project_id = <project_id>;
-
-DELETE FROM Project WHERE Project.id = <project_id>;
+DELETE FROM Task WHERE Task.project_id=<Integer>;
+DELETE FROM registration WHERE Registration.project_id=<Integer>;
+DELETE FROM Project WHERE Project.id=<Integer>;
 ```
 
 As a master, I can remove a participant from the project.
 ```sql
 DELETE FROM registration 
-    WHERE project_id=<project_id> 
-    AND account_id=<account_id>;
+    WHERE Regristration.project_id = <Integer> 
+    AND Registration.account_id = <Integer>;
 
 DELETE FROM Task 
-    WHERE Task.project_id = <project_id>
-    AND Task.account_id = <account_id>;
+    WHERE Task.project_id = <Integer>
+    AND Task.account_id = <Integer>;
 ```
 
 
