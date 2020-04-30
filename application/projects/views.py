@@ -69,3 +69,18 @@ def project_registration(project_id):
         
     except:
         abort(400)
+
+@app.route('/projects/<project_id>/deletion', methods=['POST'])
+@login_required(role="MASTER")
+def project_deletion(project_id):
+
+    try:
+        project = Project.query.get(project_id)
+        
+        if project.account_id == current_user.id:
+            Project.remove_project(project_id)
+
+        return redirect(url_for('myPage'))
+
+    except:
+        abort(400)

@@ -145,6 +145,15 @@ As a basic user, I can remove a task created by myself.
 DELETE FROM task WHERE task.id=<task_id>;
 ```
 
+As a master, I can remove a project created by myself.
+```sql
+DELETE FROM Task WHERE Task.project_id = <project_id>
+
+DELETE FROM registration WHERE project_id = <project_id>
+
+DELETE FROM Project WHERE Project.id = <project_id>
+```
+
 As a master, I can remove a participant from the project.
 ```sql
 DELETE FROM registration 

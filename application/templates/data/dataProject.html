@@ -89,7 +89,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for d in data|sort(attribute='total,com', reverse=True) %}
+            {% for d in data|sort(attribute='total', reverse=True) %}
             <tr>
                 <td> {{ d.name }} </td>
                 <td> {{ d.total }} </td>
@@ -102,7 +102,8 @@
                     </a>
                 </td>
                 <td>
-                    <form method="POST" action="{{ url_for('remove_participant_from_project', project_id=project.id, account_id=d.accountId) }} ">
+                    <form method="POST"
+                        action="{{ url_for('remove_participant_from_project', project_id=project.id, account_id=d.accountId) }} ">
                         <input class="btn btn-danger" type="submit" value="Remove" />
                     </form>
                 </td>
