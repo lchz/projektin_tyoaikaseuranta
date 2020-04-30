@@ -103,7 +103,7 @@ As a master, I can see how many hours in total have been used in the project.
 ```sql
 SELECT SUM(Task.\"estimatedTime\"), SUM(Task.\"actualTime\") FROM Task
     LEFT JOIN Project ON Project.id = Task.project_id
-    WHERE Project.id = <Integer>;
+    WHERE Project.id=<Integer>;
 ```
 
 
@@ -113,7 +113,7 @@ SELECT SUM(Task.\"estimatedTime\"), SUM(Task.\"actualTime\") FROM Task
 As a user, I can create a new account so that I can use more functionalities
 ```sql
 INSERT INTO account (date_created, date_modified, name, username, password VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, <String>, <String>, <String>);
-SELECT * FROM role WHERE role.name = <String>;
+SELECT * FROM role WHERE role.name=<String>;
 INSERT INTO user_role (role_id, account_id) VALUES (<Integer>, <Integer>);
 ```
 
@@ -138,8 +138,8 @@ INSERT INTO project (date_created, date_modified, name, description) VALUES (CUR
 
 As a basic user, I can set my actual hours spent on the task when the task is completed so that the system will record my working time.
 ```sql
-UPDATE task SET actualTime=<Numeric> WHERE task.id = <Integer>;
-UPDATE task SET status=True WHERE task.id = <Integer>;
+UPDATE task SET actualTime=<Numeric> WHERE task.id=<Integer>;
+UPDATE task SET status=True WHERE task.id=<Integer>;
 ```
 
 As a master, I can change the name of a project created by myself.
@@ -163,11 +163,9 @@ DELETE FROM task WHERE task.id=<Integer>;
 
 As a master, I can delete a project created by myself.
 ```sql
-DELETE FROM Task WHERE Task.project_id = <Integer>;
-
-DELETE FROM registration WHERE project_id = <Integer>;
-
-DELETE FROM Project WHERE Project.id = <Integer>;
+DELETE FROM Task WHERE Task.project_id=<Integer>;
+DELETE FROM registration WHERE project_id=<Integer>;
+DELETE FROM Project WHERE Project.id=<Integer>;
 ```
 
 As a master, I can remove a participant from the project.
