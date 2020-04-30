@@ -1,5 +1,5 @@
 from application import app, db, login_required
-from flask import render_template, request, redirect, url_for, abort
+from flask import render_template, request, redirect, url_for
 from flask_login import current_user
 from application.projects.models import Project
 from application.auth.models import User
@@ -77,7 +77,8 @@ def project_registration(project_id):
         return redirect(url_for('projects_index'))
         
     except:
-        abort(400)
+        return redirect(url_for('projects_index'))
+
 
 @app.route('/projects/<project_id>/deletion', methods=['POST'])
 @login_required(role="MASTER")
@@ -92,7 +93,8 @@ def project_deletion(project_id):
         return redirect(url_for('myPage'))
 
     except:
-        abort(400)
+        return redirect(url_for('myPage'))
+
 
 @app.route('/projects/<project_id>/modification/name', methods=['POST'])
 @login_required(role="MASTER")

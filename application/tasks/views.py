@@ -1,5 +1,5 @@
 from application import app, db, login_required
-from flask import render_template, request, redirect, url_for, abort
+from flask import render_template, request, redirect, url_for
 from flask_login import current_user
 from application.tasks.models import Task
 from application.auth.models import User
@@ -124,12 +124,11 @@ def task_deletion(project_id, task_id):
     try:    
         task = Task.query.get(task_id)
         
-        if not task.account_id == current_user.id:
-            abort(401)
+        if task.account_id == current_user.id:
+            db.session().delete(task)
+            db.session().commit()
 
-        db.session().delete(task)
-        db.session().commit()
         return redirect(url_for('tasks_index', project_id=project_id))
 
     except:
-        abort(400)
+        return redirect(url_for('tasks_index', project_id=project_id))
