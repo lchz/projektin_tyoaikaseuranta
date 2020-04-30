@@ -103,7 +103,7 @@ As a master, I can see how many hours in total have been used in the project.
 ```sql
 SELECT SUM(Task.\"estimatedTime\"), SUM(Task.\"actualTime\") FROM Task
     LEFT JOIN Project ON Project.id = Task.project_id
-    WHERE Project.id=<Integer>;
+    WHERE Project.id = <Integer>;
 ```
 
 
@@ -113,23 +113,22 @@ SELECT SUM(Task.\"estimatedTime\"), SUM(Task.\"actualTime\") FROM Task
 As a user, I can create a new account so that I can use more functionalities
 ```sql
 INSERT INTO account (date_created, date_modified, name, username, password VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, <String>, <String>, <String>);
-SELECT * FROM role WHERE role.name=<String>;
 INSERT INTO user_role (role_id, account_id) VALUES (<Integer>, <Integer>);
 ```
 
 As a basic user, I can register for a project so that I can start to trace my working hours on the project.
 ```sql
-INSERT INTO registration_table (project_id, account_id) VALUES (<Integer>, <Integer>);
+INSERT INTO registration (project_id, account_id) VALUES (<Integer>, <Integer>);
 ```
 
 As a basic user, I can create a task to record my working hours.
 ```sql
-INSERT INTO task (date_created, date_modified, name, content, estimatedTime, date, status) VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, <String>, <String>, <Numeric>, <Date>, <Boolean>);
+INSERT INTO task (date_created, date_modified, name, content, estimatedTime, date, status, account_id, project_id) VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, <String>, <String>, <Numeric>, <Date>, <Boolean>, <Integer>, <Integer>);
 ```
 
 As a master, I can create a project so that others can register for it.
 ```sql
-INSERT INTO project (date_created, date_modified, name, description) VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, <String>, <String>);
+INSERT INTO project (date_created, date_modified, name, description, account_id) VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, <String>, <String>, <Integer>);
 ```
 
 
@@ -156,7 +155,6 @@ UPDATE project SET description=<String> WHERE project.id=<Integer>;
 ## 4. Tiedon poistaminen
 
 As a basic user, I can delete a task created by myself.
-
 ```sql
 DELETE FROM task WHERE task.id=<Integer>;
 ```
@@ -164,15 +162,15 @@ DELETE FROM task WHERE task.id=<Integer>;
 As a master, I can delete a project created by myself.
 ```sql
 DELETE FROM Task WHERE Task.project_id=<Integer>;
-DELETE FROM registration WHERE project_id=<Integer>;
+DELETE FROM registration WHERE Registration.project_id=<Integer>;
 DELETE FROM Project WHERE Project.id=<Integer>;
 ```
 
 As a master, I can remove a participant from the project.
 ```sql
 DELETE FROM registration 
-    WHERE project_id = <Integer> 
-    AND account_id = <Integer>;
+    WHERE Regristration.project_id = <Integer> 
+    AND Registration.account_id = <Integer>;
 
 DELETE FROM Task 
     WHERE Task.project_id = <Integer>
